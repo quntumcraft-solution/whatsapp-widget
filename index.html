@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=240,height=320,initial-scale=1,user-scalable=no">
+
+<title>WhatsApp</title>
+
+<style>
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    font-family:Arial,sans-serif;
+    background:#fff;
+    overflow:hidden;
+}
+
+#page{
+    width:240px;
+    height:320px;
+    transform-origin:top left;
+    background:#fff;
+}
+
+.header{
+    height:40px;
+    background:#25D366;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+    padding-left:10px;
+}
+
+.content{
+    height:230px;
+    padding:10px;
+}
+
+button{
+    width:220px;
+    height:48px;
+    margin-bottom:10px;
+    background:white;
+    border:1px solid #999;
+    font-size:15px;
+}
+
+button:focus{
+    outline:2px solid #128C7E;
+    background:#e8fff0;
+}
+
+.footer{
+    height:30px;
+    border-top:1px solid #aaa;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 8px;
+    font-size:11px;
+}
+
+#zoom{
+    position:fixed;
+    left:2px;
+    top:2px;
+    background:#000;
+    color:#fff;
+    padding:2px 4px;
+    font-size:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="page">
+
+    <div class="header">
+        WhatsApp
+    </div>
+
+    <div class="content">
+
+        <button id="open" onclick="openWhatsApp()">
+            Open WhatsApp
+        </button>
+
+    </div>
+
+    <div class="footer">
+        <span>* Zoom In</span>
+        <span># Zoom Out</span>
+    </div>
+
+</div>
+
+<div id="zoom">100%</div>
+
+<script>
+
+let zoom = 1.0;
+
+function applyZoom(){
+
+    document.getElementById("page").style.transform =
+        "scale(" + zoom + ")";
+
+    document.getElementById("zoom").textContent =
+        Math.round(zoom * 100) + "%";
+
+}
+
+function zoomIn(){
+
+    zoom = Math.min(
+        2.0,
+        +(zoom + 0.1).toFixed(1)
+    );
+
+    applyZoom();
+
+}
+
+function zoomOut(){
+
+    zoom = Math.max(
+        0.7,
+        +(zoom - 0.1).toFixed(1)
+    );
+
+    applyZoom();
+
+}
+
+function openWhatsApp(){
+
+    window.location.href =
+        "https://web.whatsapp.com/";
+
+}
+
+document.getElementById("open").focus();
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key === "*"){
+
+        e.preventDefault();
+        zoomIn();
+
+    }
+
+    if(e.key === "#"){
+
+        e.preventDefault();
+        zoomOut();
+
+    }
+
+    if(e.key === "Enter"){
+
+        e.preventDefault();
+        openWhatsApp();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
