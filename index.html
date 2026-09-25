@@ -4,286 +4,253 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-<title>Cloud Phone Web Hub V4.2</title>
+<title>WEB HUB</title>
 
 <style>
 *{box-sizing:border-box}
+
 html,body{
-margin:0;width:100%;height:100%;overflow:hidden;
-font-family:Arial,sans-serif;
-background:#07111f;color:#f5f8ff
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+    background:#000;
+    color:#111;
 }
-button,input{font:inherit}
 
 #app{
-height:100%;
-display:flex;
-flex-direction:column;
-max-width:520px;
-margin:auto;
-background:#07111f
+    width:100%;
+    height:100%;
+    max-width:520px;
+    margin:auto;
+    display:flex;
+    flex-direction:column;
+    background:#fff;
 }
 
-header{
-height:34px;
-flex:0 0 34px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 7px;
-background:#0b1d33;
-border-bottom:1px solid #24547e;
-font-size:13px;
-font-weight:bold
+/* HEADER */
+
+#header{
+    height:38px;
+    min-height:38px;
+    background:#071a2c;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
+    font-weight:bold;
+    letter-spacing:.5px;
 }
 
-#brand{
-display:flex;
-align-items:center;
-gap:6px
+/* ZOOM */
+
+#zoombar{
+    height:32px;
+    min-height:32px;
+    display:flex;
+    gap:4px;
+    padding:3px 5px;
+    background:#fff;
+    border-bottom:1px solid #aaa;
 }
 
-#brandIcon{
-width:22px;
-height:22px;
-border-radius:6px;
-background:#0b8cff;
-display:flex;
-align-items:center;
-justify-content:center
+.zoom{
+    flex:1;
+    background:#fff;
+    border:1px solid #1795d2;
+    color:#087bb2;
+    border-radius:3px;
+    font-size:11px;
 }
+
+.zoom.active{
+    background:#e7f6ff;
+    border:2px solid #087db6;
+}
+
+/* SCREEN */
 
 #screen{
-flex:1;
-overflow:auto;
-padding:5px
+    flex:1;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background:#fff;
 }
 
-.hero{
-padding:8px;
-border:1px solid #174b76;
-border-radius:8px;
-background:#0b1c30;
-margin-bottom:5px
+/* SECTION */
+
+.section{
+    height:27px;
+    padding:5px 7px 3px;
+    font-size:12px;
+    font-weight:bold;
+    color:#222;
+    background:#fff;
 }
 
-.heroTitle{
-font-size:17px;
-font-weight:bold
-}
-
-.sub{
-font-size:9px;
-opacity:.75;
-margin-top:2px
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:4px;
-margin-bottom:5px
-}
-
-.tile{
-min-height:43px;
-border:1px solid #214866;
-border-radius:7px;
-background:#0d233b;
-color:#fff;
-padding:5px;
-text-align:left
-}
-
-.tile b{
-display:block;
-font-size:10px
-}
-
-.tile small{
-font-size:8px;
-opacity:.7
-}
+/* ROW */
 
 .row{
-display:flex;
-align-items:center;
-gap:5px;
-min-height:31px;
-padding:4px 5px;
-border-bottom:1px solid #17344f;
-border-radius:4px
+    height:39px;
+    min-height:39px;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 8px;
+
+    border-bottom:1px solid #d6d6d6;
+
+    background:#fff;
+    color:#222;
+
+    font-size:15px;
 }
 
-.row.sel{
-background:#145b93;
-border:1px solid #2b9cff
+.row.selected{
+    background:#050505;
+    color:#fff;
 }
 
-.icon{
-width:22px;
-height:22px;
-object-fit:contain;
-flex:0 0 22px;
-background:#fff;
-border-radius:4px
-}
-
-.fallback{
-width:22px;
-height:22px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#244563;
-color:#fff;
-font-weight:bold;
-border-radius:4px;
-flex:0 0 22px;
-font-size:11px
-}
-
-.num{
-width:22px;
-flex:0 0 22px;
-font-size:9px;
-opacity:.8
+.number{
+    width:35px;
+    min-width:35px;
+    font-size:15px;
 }
 
 .name{
-overflow:hidden;
-text-overflow:ellipsis;
-white-space:nowrap;
-font-size:11px
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
 
-.meta{
-margin-left:auto;
-font-size:8px;
-opacity:.7
+.arrow{
+    margin-left:auto;
+    font-size:18px;
 }
 
-.section{
-font-size:9px;
-font-weight:bold;
-color:#8fcaff;
-padding:5px 2px 3px
+/* SEARCH */
+
+#search{
+    width:calc(100% - 10px);
+    height:32px;
+    margin:5px;
+    padding:3px 7px;
+    border:1px solid #888;
+    border-radius:2px;
+    background:#fff;
+    color:#111;
+    font-size:14px;
+    outline:none;
 }
 
-input{
-width:100%;
-height:31px;
-border:1px solid #28608d;
-border-radius:6px;
-background:#091a2c;
-color:#fff;
-padding:5px 7px;
-font-size:12px;
-outline:none
+/* FOOTER */
+
+#footer{
+    height:42px;
+    min-height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 7px;
+
+    border-top:1px solid #aaa;
+
+    background:#fff;
+
+    color:#087db6;
+
+    font-size:12px;
 }
 
-#fitbar{
-height:27px;
-display:flex;
-gap:3px;
-padding:3px 5px;
-background:#09182a;
-border-bottom:1px solid #173b59
+.footerLeft{
+    width:33%;
+    text-align:left;
 }
 
-#fitbar button{
-flex:1;
-border:1px solid #275579;
-border-radius:4px;
-background:#102a44;
-color:#dceeff;
-font-size:9px
+.footerCenter{
+    width:34%;
+    text-align:center;
 }
 
-#fitbar button.sel{
-background:#1468a6
+.footerRight{
+    width:33%;
+    text-align:right;
 }
 
-footer{
-height:29px;
-flex:0 0 29px;
-border-top:1px solid #21445f;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:0 6px;
-font-size:9px;
-color:#b9d7ef
+/* SMALL DISPLAY */
+
+@media(max-height:180px){
+
+    #header{
+        height:29px;
+        min-height:29px;
+        font-size:14px;
+    }
+
+    #zoombar{
+        height:27px;
+        min-height:27px;
+    }
+
+    .zoom{
+        font-size:9px;
+    }
+
+    .section{
+        height:23px;
+        padding:4px 5px 2px;
+        font-size:10px;
+    }
+
+    .row{
+        height:30px;
+        min-height:30px;
+        font-size:12px;
+        padding:0 5px;
+    }
+
+    .number{
+        width:28px;
+        min-width:28px;
+        font-size:12px;
+    }
+
+    #footer{
+        height:31px;
+        min-height:31px;
+        font-size:9px;
+    }
 }
 
-.badge{
-padding:2px 4px;
-border-radius:4px;
-background:#153a59
-}
+/* VERY SMALL WIDTH */
 
-.light{
-background:#f4f7fb!important;
-color:#17212b!important
-}
+@media(max-width:150px){
 
-.light #app,
-.light #screen{
-background:#f4f7fb;
-color:#17212b
-}
+    #header{
+        font-size:13px;
+    }
 
-.light header{
-background:#e4edf6;
-color:#17212b;
-border-color:#b6cadc
-}
+    .zoom{
+        font-size:8px;
+    }
 
-.light .hero,
-.light .tile,
-.light .row{
-background:#fff;
-color:#17212b;
-border-color:#c7d5e2
-}
+    .row{
+        font-size:11px;
+    }
 
-.light .row.sel{
-background:#d5eaff;
-border-color:#4d94cf
-}
+    .number{
+        width:24px;
+        min-width:24px;
+    }
 
-.light input{
-background:#fff;
-color:#17212b;
-border-color:#9bb6cc
-}
-
-.light #fitbar{
-background:#e7eef5;
-border-color:#c2d2df
-}
-
-.light #fitbar button{
-background:#fff;
-color:#17212b;
-border-color:#9bb6cc
-}
-
-.light footer{
-border-color:#c2d2df;
-color:#425b70
-}
-
-.fontSmall .name{
-font-size:10px
-}
-
-.fontLarge .name{
-font-size:13px
-}
-
-.fontLarge .row{
-min-height:35px
+    #footer{
+        font-size:8px;
+    }
 }
 </style>
 </head>
@@ -292,27 +259,46 @@ min-height:35px
 
 <div id="app">
 
-<header>
-<div id="brand">
-<span id="brandIcon">🌐</span>
-<span id="title">WEB HUB 2</span>
-</div>
-<span id="clock">--:--</span>
-</header>
+    <div id="header">
+        WEB HUB
+    </div>
 
-<div id="fitbar">
-<button id="bFit" onclick="setHubZoom(1)">FIT</button>
-<button onclick="setHubZoom(.9)">90%</button>
-<button onclick="setHubZoom(1)">100%</button>
-<button onclick="setHubZoom(1.15)">115%</button>
-</div>
+    <div id="zoombar">
 
-<div id="screen"></div>
+        <button class="zoom active"
+                onclick="setZoom(1,this)">
+            FIT
+        </button>
 
-<footer>
-<span id="leftKey">LSK Menu</span>
-<span id="rightKey">OK Open · # Back</span>
-</footer>
+        <button class="zoom"
+                onclick="setZoom(1,this)">
+            100%
+        </button>
+
+        <button class="zoom"
+                onclick="setZoom(1.25,this)">
+            125%
+        </button>
+
+    </div>
+
+    <div id="screen"></div>
+
+    <div id="footer">
+
+        <div class="footerLeft">
+            LSK<br>Menu
+        </div>
+
+        <div class="footerCenter">
+            OK Open
+        </div>
+
+        <div class="footerRight">
+            RSK<br>Back
+        </div>
+
+    </div>
 
 </div>
 
@@ -320,140 +306,120 @@ min-height:35px
 <script>
 
 /* =====================================================
-   WEB HUB 2 — 100 WEBSITES
+   100 WEBSITES
 ===================================================== */
 
-const sites=[
+var sites=[
 
-/* GOVERNMENT */
+["Government","India.gov.in","https://www.india.gov.in/"],
+["Government","DigiLocker","https://www.digilocker.gov.in/"],
+["Government","UMANG","https://web.umang.gov.in/"],
+["Government","MyGov","https://www.mygov.in/"],
+["Government","UIDAI","https://uidai.gov.in/"],
+["Government","Income Tax","https://www.incometax.gov.in/"],
+["Government","GST Portal","https://www.gst.gov.in/"],
+["Government","EPFO","https://www.epfindia.gov.in/"],
+["Government","Passport Seva","https://www.passportindia.gov.in/"],
+["Government","Parivahan","https://parivahan.gov.in/"],
 
-["Government","India.gov.in","https://www.india.gov.in/","india"],
-["Government","DigiLocker","https://www.digilocker.gov.in/","digilocker"],
-["Government","UMANG","https://web.umang.gov.in/","umang"],
-["Government","MyGov","https://www.mygov.in/",""],
-["Government","UIDAI","https://uidai.gov.in/",""],
-["Government","Income Tax","https://www.incometax.gov.in/",""],
-["Government","GST Portal","https://www.gst.gov.in/",""],
-["Government","EPFO","https://www.epfindia.gov.in/",""],
-["Government","Passport Seva","https://www.passportindia.gov.in/",""],
-["Government","Parivahan","https://parivahan.gov.in/",""],
+["Jobs","Naukri","https://www.naukri.com/"],
+["Jobs","Indeed","https://in.indeed.com/"],
+["Jobs","LinkedIn Jobs","https://www.linkedin.com/jobs/"],
+["Jobs","Internshala","https://internshala.com/"],
+["Jobs","Apna","https://apna.co/"],
+["Jobs","Foundit","https://www.foundit.in/"],
+["Jobs","WorkIndia","https://www.workindia.in/"],
+["Jobs","Unstop","https://unstop.com/"],
+["Jobs","Shine","https://www.shine.com/"],
+["Jobs","TimesJobs","https://www.timesjobs.com/"],
 
-/* JOBS */
+["Education","NPTEL","https://nptel.ac.in/"],
+["Education","SWAYAM","https://swayam.gov.in/"],
+["Education","DIKSHA","https://diksha.gov.in/"],
+["Education","NDLI","https://ndl.iitkgp.ac.in/"],
+["Education","Shodhganga","https://shodhganga.inflibnet.ac.in/"],
+["Education","e-PG Pathshala","https://epgp.inflibnet.ac.in/"],
+["Education","Testbook","https://testbook.com/"],
+["Education","Adda247","https://www.adda247.com/"],
+["Education","Careers360","https://www.careers360.com/"],
+["Education","Shiksha","https://www.shiksha.com/"],
 
-["Jobs","Naukri","https://www.naukri.com/","naukri"],
-["Jobs","Indeed","https://in.indeed.com/","indeed"],
-["Jobs","LinkedIn Jobs","https://www.linkedin.com/jobs/","linkedin"],
-["Jobs","Internshala","https://internshala.com/","internshala"],
-["Jobs","Apna","https://apna.co/",""],
-["Jobs","Foundit","https://www.foundit.in/",""],
-["Jobs","WorkIndia","https://www.workindia.in/",""],
-["Jobs","Unstop","https://unstop.com/",""],
-["Jobs","Shine","https://www.shine.com/",""],
-["Jobs","TimesJobs","https://www.timesjobs.com/",""],
+["Exams","CBSE","https://www.cbse.gov.in/"],
+["Exams","Maharashtra Board","https://mahahsscboard.in/"],
+["Exams","UPSC","https://upsc.gov.in/"],
+["Exams","SSC","https://ssc.gov.in/"],
+["Exams","IBPS","https://www.ibps.in/"],
+["Exams","NTA","https://exams.nta.ac.in/"],
+["Exams","JEE Main","https://jeemain.nta.nic.in/"],
+["Exams","NEET","https://neet.nta.nic.in/"],
+["Exams","MPSC","https://mpsc.gov.in/"],
+["Exams","MahaDBT","https://mahadbt.maharashtra.gov.in/"],
 
-/* EDUCATION */
+["Travel","IRCTC","https://www.irctc.co.in/"],
+["Travel","Indian Railways","https://indianrailways.gov.in/"],
+["Travel","RedBus","https://www.redbus.in/"],
+["Travel","MakeMyTrip","https://www.makemytrip.com/"],
+["Travel","Goibibo","https://www.goibibo.com/"],
+["Travel","EaseMyTrip","https://www.easemytrip.com/"],
+["Travel","Yatra","https://www.yatra.com/"],
+["Travel","IndiGo","https://www.goindigo.in/"],
+["Travel","Air India","https://www.airindia.com/"],
+["Travel","Cleartrip","https://www.cleartrip.com/"],
 
-["Education","NPTEL","https://nptel.ac.in/","nptel"],
-["Education","SWAYAM","https://swayam.gov.in/",""],
-["Education","DIKSHA","https://diksha.gov.in/",""],
-["Education","NDLI","https://ndl.iitkgp.ac.in/",""],
-["Education","Shodhganga","https://shodhganga.inflibnet.ac.in/",""],
-["Education","e-PG Pathshala","https://epgp.inflibnet.ac.in/",""],
-["Education","Testbook","https://testbook.com/",""],
-["Education","Adda247","https://www.adda247.com/",""],
-["Education","Careers360","https://www.careers360.com/",""],
-["Education","Shiksha","https://www.shiksha.com/",""],
+["Food","Swiggy","https://www.swiggy.com/"],
+["Food","Zomato","https://www.zomato.com/"],
+["Food","Blinkit","https://blinkit.com/"],
+["Food","Zepto","https://www.zeptonow.com/"],
+["Food","BigBasket","https://www.bigbasket.com/"],
+["Food","JioMart","https://www.jiomart.com/"],
+["Food","Dominos India","https://www.dominos.co.in/"],
+["Food","McDonalds India","https://www.mcdonaldsindia.com/"],
+["Food","EatSure","https://www.eatsure.com/"],
+["Food","FreshToHome","https://www.freshtohome.com/"],
 
-/* EXAMS */
+["Finance","PhonePe","https://www.phonepe.com/"],
+["Finance","Paytm","https://paytm.com/"],
+["Finance","Google Pay","https://pay.google.com/"],
+["Finance","Bajaj Finserv","https://www.bajajfinserv.in/"],
+["Finance","Razorpay","https://razorpay.com/"],
+["Finance","CRED","https://cred.club/"],
+["Finance","Groww","https://groww.in/"],
+["Finance","Zerodha","https://zerodha.com/"],
+["Finance","Upstox","https://upstox.com/"],
+["Finance","Moneycontrol","https://www.moneycontrol.com/"],
 
-["Exams","CBSE","https://www.cbse.gov.in/",""],
-["Exams","Maharashtra Board","https://mahahsscboard.in/",""],
-["Exams","UPSC","https://upsc.gov.in/",""],
-["Exams","SSC","https://ssc.gov.in/",""],
-["Exams","IBPS","https://www.ibps.in/",""],
-["Exams","NTA","https://exams.nta.ac.in/",""],
-["Exams","JEE Main","https://jeemain.nta.nic.in/",""],
-["Exams","NEET","https://neet.nta.nic.in/",""],
-["Exams","MPSC","https://mpsc.gov.in/",""],
-["Exams","MahaDBT","https://mahadbt.maharashtra.gov.in/",""],
+["Shopping","AJIO","https://www.ajio.com/"],
+["Shopping","Nykaa","https://www.nykaa.com/"],
+["Shopping","Tata CLiQ","https://www.tatacliq.com/"],
+["Shopping","Snapdeal","https://www.snapdeal.com/"],
+["Shopping","IndiaMART","https://www.indiamart.com/"],
+["Shopping","OLX","https://www.olx.in/"],
+["Shopping","CarDekho","https://www.cardekho.com/"],
+["Shopping","BikeDekho","https://www.bikedekho.com/"],
+["Shopping","Pepperfry","https://www.pepperfry.com/"],
+["Shopping","FirstCry","https://www.firstcry.com/"],
 
-/* TRAVEL */
+["Entertainment","Netflix","https://www.netflix.com/"],
+["Entertainment","JioHotstar","https://www.hotstar.com/"],
+["Entertainment","Sony LIV","https://www.sonyliv.com/"],
+["Entertainment","ZEE5","https://www.zee5.com/"],
+["Entertainment","JioSaavn","https://www.jiosaavn.com/"],
+["Entertainment","Gaana","https://gaana.com/"],
+["Entertainment","BookMyShow","https://in.bookmyshow.com/"],
+["Entertainment","MX Player","https://www.mxplayer.in/"],
+["Entertainment","Aha","https://www.aha.video/"],
+["Entertainment","Hungama","https://www.hungama.com/"],
 
-["Travel","IRCTC","https://www.irctc.co.in/",""],
-["Travel","Indian Railways","https://indianrailways.gov.in/",""],
-["Travel","RedBus","https://www.redbus.in/",""],
-["Travel","MakeMyTrip","https://www.makemytrip.com/",""],
-["Travel","Goibibo","https://www.goibibo.com/",""],
-["Travel","EaseMyTrip","https://www.easemytrip.com/",""],
-["Travel","Yatra","https://www.yatra.com/",""],
-["Travel","IndiGo","https://www.goindigo.in/",""],
-["Travel","Air India","https://www.airindia.com/",""],
-["Travel","Cleartrip","https://www.cleartrip.com/",""],
-
-/* FOOD */
-
-["Food","Swiggy","https://www.swiggy.com/","swiggy"],
-["Food","Zomato","https://www.zomato.com/","zomato"],
-["Food","Blinkit","https://blinkit.com/","blinkit"],
-["Food","Zepto","https://www.zeptonow.com/",""],
-["Food","BigBasket","https://www.bigbasket.com/",""],
-["Food","JioMart","https://www.jiomart.com/",""],
-["Food","Domino's India","https://www.dominos.co.in/","dominos"],
-["Food","McDonald's India","https://www.mcdonaldsindia.com/","mcdonalds"],
-["Food","EatSure","https://www.eatsure.com/",""],
-["Food","FreshToHome","https://www.freshtohome.com/",""],
-
-/* FINANCE */
-
-["Finance","PhonePe","https://www.phonepe.com/","phonepe"],
-["Finance","Paytm","https://paytm.com/","paytm"],
-["Finance","Google Pay","https://pay.google.com/","googlepay"],
-["Finance","Bajaj Finserv","https://www.bajajfinserv.in/","bajajfinserv"],
-["Finance","Razorpay","https://razorpay.com/","razorpay"],
-["Finance","CRED","https://cred.club/",""],
-["Finance","Groww","https://groww.in/","groww"],
-["Finance","Zerodha","https://zerodha.com/","zerodha"],
-["Finance","Upstox","https://upstox.com/","upstox"],
-["Finance","Moneycontrol","https://www.moneycontrol.com/","moneycontrol"],
-
-/* SHOPPING */
-
-["Shopping","AJIO","https://www.ajio.com/","ajio"],
-["Shopping","Nykaa","https://www.nykaa.com/","nykaa"],
-["Shopping","Tata CLiQ","https://www.tatacliq.com/",""],
-["Shopping","Snapdeal","https://www.snapdeal.com/","snapdeal"],
-["Shopping","IndiaMART","https://www.indiamart.com/","indiamart"],
-["Shopping","OLX","https://www.olx.in/","olx"],
-["Shopping","CarDekho","https://www.cardekho.com/",""],
-["Shopping","BikeDekho","https://www.bikedekho.com/",""],
-["Shopping","Pepperfry","https://www.pepperfry.com/","pepperfry"],
-["Shopping","FirstCry","https://www.firstcry.com/","firstcry"],
-
-/* ENTERTAINMENT */
-
-["Entertainment","Netflix","https://www.netflix.com/","netflix"],
-["Entertainment","JioHotstar","https://www.hotstar.com/",""],
-["Entertainment","Sony LIV","https://www.sonyliv.com/","sonyliv"],
-["Entertainment","ZEE5","https://www.zee5.com/","zee5"],
-["Entertainment","JioSaavn","https://www.jiosaavn.com/","jiosaavn"],
-["Entertainment","Gaana","https://gaana.com/","gaana"],
-["Entertainment","BookMyShow","https://in.bookmyshow.com/",""],
-["Entertainment","MX Player","https://www.mxplayer.in/",""],
-["Entertainment","Aha","https://www.aha.video/",""],
-["Entertainment","Hungama","https://www.hungama.com/","hungama"],
-
-/* USEFUL */
-
-["Useful","Justdial","https://www.justdial.com/",""],
-["Useful","Practo","https://www.practo.com/","practo"],
-["Useful","Goodreturns","https://www.goodreturns.in/",""],
-["Useful","Screener","https://www.screener.in/",""],
-["Useful","Prokerala","https://www.prokerala.com/",""],
-["Useful","APKMirror","https://www.apkmirror.com/","apkmirror"],
-["Useful","Speedtest","https://www.speedtest.net/","speedtest"],
-["Useful","VirusTotal","https://www.virustotal.com/","virustotal"],
-["Useful","Canva","https://www.canva.com/","canva"],
-["Useful","Smallpdf","https://smallpdf.com/","smallpdf"]
+["Useful","Justdial","https://www.justdial.com/"],
+["Useful","Practo","https://www.practo.com/"],
+["Useful","Goodreturns","https://www.goodreturns.in/"],
+["Useful","Screener","https://www.screener.in/"],
+["Useful","Prokerala","https://www.prokerala.com/"],
+["Useful","APKMirror","https://www.apkmirror.com/"],
+["Useful","Speedtest","https://www.speedtest.net/"],
+["Useful","VirusTotal","https://www.virustotal.com/"],
+["Useful","Canva","https://www.canva.com/"],
+["Useful","Smallpdf","https://smallpdf.com/"]
 
 ];
 
@@ -462,457 +428,336 @@ const sites=[
    CATEGORIES
 ===================================================== */
 
-const cats=[
-"All",
-"Favorites",
-"Government",
-"Jobs",
-"Education",
-"Exams",
-"Travel",
-"Food",
-"Finance",
-"Shopping",
-"Entertainment",
-"Useful"
-];
-
-const catIcons=[
-"▦","★","🇮🇳","💼","📚","🎓",
-"✈","🍔","₹","🛒","▶","⚙"
+var categories=[
+    "All",
+    "Favorites",
+    "Government",
+    "Jobs",
+    "Education",
+    "Exams",
+    "Travel",
+    "Food",
+    "Finance",
+    "Shopping",
+    "Entertainment",
+    "Useful"
 ];
 
 
 /* =====================================================
-   STATE
+   VARIABLES
 ===================================================== */
 
-let mode="home";
-let cat=0;
-let index=0;
-let query="";
+var mode="categories";
 
-let fav=
-JSON.parse(
-localStorage.getItem("cloudHub2Fav")||"[]"
-);
+var selected=0;
 
-let recent=
-JSON.parse(
-localStorage.getItem("cloudHub2Recent")||"[]"
-);
+var currentCategory="All";
 
-let theme=
-localStorage.getItem("cloudHub2Theme")||"dark";
+var favorites=[];
 
-let font=
-localStorage.getItem("cloudHub2Font")||"normal";
-
-let zoom=
-parseFloat(
-localStorage.getItem("cloudHub2Zoom")||"1"
-);
+var recent=[];
 
 
 /* =====================================================
-   ICON
+   LOAD STORAGE
 ===================================================== */
 
-function ico(slug,name){
-
-if(!slug){
-
-return '<span class="fallback">'+
-esc(name[0]||"?")+
-'</span>';
-
+try{
+    favorites=
+    JSON.parse(
+        localStorage.getItem("wh_fav")||"[]"
+    );
+}catch(e){
+    favorites=[];
 }
 
-return '<img class="icon" src="https://cdn.simpleicons.org/>'+
-encodeURIComponent(slug)+
-'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'+
-'<span class="fallback" style="display:none">'+
-esc(name[0]||"?")+
-'</span>';
-
+try{
+    recent=
+    JSON.parse(
+        localStorage.getItem("wh_recent")||"[]"
+    );
+}catch(e){
+    recent=[];
 }
 
 
 /* =====================================================
-   ESCAPE
+   RENDER CATEGORIES
 ===================================================== */
 
-function esc(s){
+function renderCategories(){
 
-return String(s).replace(
-/[&<>"']/g,
-c=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c])
-);
+    mode="categories";
 
-}
+    var html="";
 
+    html+=
+    '<div class="section">CATEGORIES</div>';
 
-/* =====================================================
-   FILTER
-===================================================== */
+    var i;
 
-function list(){
+    for(i=0;i<categories.length;i++){
 
-let a=sites;
+        html+=
+        '<div class="row '+
+        (i===selected?"selected":"")+
+        '" data-i="'+i+'">'+
 
-if(cat===1){
+            '<span class="number">'+
+            (i+1)+'.'+
+            '</span>'+
 
-a=sites.filter(
-(_,i)=>fav.includes(i)
-);
+            '<span class="name">'+
+            categories[i]+
+            (i===1 && favorites.length
+            ?' ('+favorites.length+')'
+            :'')+
+            '</span>'+
 
-}
+            '<span class="arrow">›</span>'+
 
-else if(cat>1){
+        '</div>';
 
-a=sites.filter(
-s=>s[0]===cats[cat]
-);
+    }
 
-}
+    document.getElementById(
+        "screen"
+    ).innerHTML=html;
 
-if(query){
-
-a=a.filter(
-s=>
-(s[1]+" "+s[0])
-.toLowerCase()
-.includes(
-query.toLowerCase()
-)
-);
-
-}
-
-return a;
+    scrollSelected();
 
 }
 
 
 /* =====================================================
-   RENDER
+   GET LIST
 ===================================================== */
 
-function render(){
+function getList(){
 
-const sc=
-document.getElementById("screen");
+    var arr=[];
 
-document.body.className=
-(theme==="light"?"light ":"")+
-(
-font==="small"
-?"fontSmall":
-font==="large"
-?"fontLarge":
-""
-);
+    var i;
 
-document.getElementById("clock")
-.textContent=
-new Date()
-.toLocaleTimeString(
-[],
-{
-hour:"2-digit",
-minute:"2-digit"
-}
-);
+    for(i=0;i<sites.length;i++){
 
+        if(currentCategory==="All"){
 
-/* HOME */
+            arr.push(i);
 
-if(mode==="home"){
+        }
+        else if(
+            currentCategory==="Favorites"
+        ){
 
-document.getElementById("title")
-.textContent="WEB HUB 2";
+            if(
+                favorites.indexOf(i)!==-1
+            ){
+                arr.push(i);
+            }
 
-sc.innerHTML=
+        }
+        else{
 
-'<div class="hero">'+
-'<div class="heroTitle">🌐 Web Hub 2</div>'+
-'<div class="sub">100 Websites • Keypad Optimized • Cloud Phone</div>'+
-'</div>'+
+            if(
+                sites[i][0]===
+                currentCategory
+            ){
+                arr.push(i);
+            }
 
-'<div class="grid">'+
+        }
 
-'<button class="tile" onclick="goSearch()">'+
-'<b>🔎 Search</b>'+
-'<small>Find websites</small>'+
-'</button>'+
+    }
 
-'<button class="tile" onclick="openFav()">'+
-'<b>⭐ Favorites</b>'+
-'<small>'+fav.length+' saved</small>'+
-'</button>'+
-
-'<button class="tile" onclick="openRecent()">'+
-'<b>🕘 Recent</b>'+
-'<small>'+recent.length+' used</small>'+
-'</button>'+
-
-'</div>'+
-
-'<div class="section">CATEGORIES</div>'+
-
-cats.map(
-(c,i)=>
-'<div class="row '+(i===index?"sel":"")+
-'" data-i="'+i+'">'+
-
-'<span class="fallback">'+
-catIcons[i]+
-'</span>'+
-
-'<span class="num">'+
-(i+1)+
-'.</span>'+
-
-'<span class="name">'+
-esc(c)+
-'</span>'+
-
-'<span class="meta">›</span>'+
-
-'</div>'
-).join("");
-
-}
-
-
-/* SEARCH */
-
-else if(mode==="search"){
-
-document.getElementById("title")
-.textContent="SEARCH";
-
-sc.innerHTML=
-
-'<input id="q" '+
-'placeholder="Type website name..." '+
-'value="'+esc(query)+'">'+
-
-'<div class="section">RESULTS</div>'+
-
-(
-list().length
-?
-list().map(
-(s,i)=>siteRow(s,i)
-).join("")
-:
-'<div class="hero">No results found.</div>'
-);
-
-const q=
-document.getElementById("q");
-
-q.focus();
-
-q.setSelectionRange(
-q.value.length,
-q.value.length
-);
-
-}
-
-
-/* SETTINGS */
-
-else if(mode==="settings"){
-
-document.getElementById("title")
-.textContent="SETTINGS";
-
-const items=[
-
-["Theme",
-theme==="dark"?"Dark":"Light"],
-
-["Font Size",
-font==="normal"
-?"Normal"
-:font==="large"
-?"Large"
-:"Small"],
-
-["Hub Zoom",
-Math.round(zoom*100)+"%"],
-
-["Clear Favorites",
-fav.length+" saved"],
-
-["Clear History",
-recent.length+" saved"],
-
-["About",
-"Web Hub 2"]
-
-];
-
-sc.innerHTML=
-items.map(
-(x,i)=>
-'<div class="row '+
-(i===index?"sel":"")+
-'" data-i="'+i+'">'+
-
-'<span class="fallback">'+
-["◐","Aa","⛶","★","⌫","ℹ"][i]+
-'</span>'+
-
-'<span class="name">'+
-x[0]+
-'</span>'+
-
-'<span class="meta">'+
-x[1]+" ›"+
-'</span>'+
-
-'</div>'
-).join("");
-
-}
-
-
-/* LIST */
-
-else{
-
-document.getElementById("title")
-.textContent=
-mode==="fav"
-?"FAVORITES":
-mode==="recent"
-?"RECENT":
-cats[cat];
-
-let a=list();
-
-if(mode==="recent"){
-
-a=
-recent
-.map(i=>sites[i])
-.filter(Boolean);
-
-}
-
-sc.innerHTML=
-a.length
-?
-a.map(
-(s,i)=>siteRow(s,i)
-).join("")
-:
-'<div class="hero">No websites here.</div>';
-
-}
+    return arr;
 
 }
 
 
 /* =====================================================
-   ROW
+   RENDER SITES
 ===================================================== */
 
-function siteRow(s,i){
+function renderSites(){
 
-return '<div class="row '+
-(i===index?"sel":"")+
-'" data-i="'+i+'">'+
+    mode="sites";
 
-ico(s[3],s[1])+
+    var list=getList();
 
-'<span class="num">'+
-(i+1)+
-'.</span>'+
+    var html="";
 
-'<span class="name">'+
-esc(s[1])+
-'</span>'+
+    html+=
+    '<div class="section">'+
+    currentCategory.toUpperCase()+
+    '</div>';
 
-'<span class="meta">'+
-(
-fav.includes(
-sites.indexOf(s)
-)
-?"★":""
-)+
-'</span>'+
 
-'</div>';
+    if(list.length===0){
+
+        html+=
+        '<div class="row selected">'+
+        '<span class="name">'+
+        'No websites found'+
+        '</span>'+
+        '</div>';
+
+    }
+
+
+    var i;
+
+    for(i=0;i<list.length;i++){
+
+        var id=list[i];
+
+        var star=
+        favorites.indexOf(id)!==-1
+        ?" ★"
+        :"";
+
+        html+=
+        '<div class="row '+
+        (i===selected?"selected":"")+
+        '" data-i="'+i+'">'+
+
+            '<span class="number">'+
+            (i+1)+'.'+
+            '</span>'+
+
+            '<span class="name">'+
+            sites[id][1]+
+            star+
+            '</span>'+
+
+        '</div>';
+
+    }
+
+
+    document.getElementById(
+        "screen"
+    ).innerHTML=html;
+
+    scrollSelected();
 
 }
 
 
 /* =====================================================
-   OPEN WEBSITE
+   OPEN SITE
 ===================================================== */
 
-function openSite(s){
+function openSite(){
 
-if(!s)return;
+    var list=getList();
 
-const si=
-sites.indexOf(s);
+    if(!list[selected]){
+        return;
+    }
 
-if(si>=0){
+    var id=list[selected];
 
-recent=[
-si,
-...recent.filter(
-x=>x!==si
-)
-].slice(0,20);
 
-localStorage.setItem(
-"cloudHub2Recent",
-JSON.stringify(recent)
-);
+    /* recent */
 
-}
+    var newRecent=[];
 
-location.href=s[2];
+    newRecent.push(id);
+
+    var i;
+
+    for(i=0;i<recent.length;i++){
+
+        if(
+            recent[i]!==id &&
+            newRecent.length<20
+        ){
+            newRecent.push(
+                recent[i]
+            );
+        }
+
+    }
+
+    recent=newRecent;
+
+    try{
+        localStorage.setItem(
+            "wh_recent",
+            JSON.stringify(recent)
+        );
+    }catch(e){}
+
+
+    window.location.href=
+    sites[id][2];
 
 }
 
 
 /* =====================================================
-   NAVIGATION
+   FAVORITE
 ===================================================== */
 
-function move(n){
+function toggleFavorite(){
 
-let len;
+    var list=getList();
 
-if(mode==="home")
-len=cats.length;
+    if(!list[selected]){
+        return;
+    }
 
-else if(mode==="settings")
-len=6;
+    var id=list[selected];
 
-else
-len=list().length;
+    var p=
+    favorites.indexOf(id);
 
-if(!len)return;
+    if(p===-1){
 
-index=
-(index+n+len)%len;
+        favorites.push(id);
 
-render();
+    }else{
+
+        favorites.splice(p,1);
+
+    }
+
+    try{
+        localStorage.setItem(
+            "wh_fav",
+            JSON.stringify(favorites)
+        );
+    }catch(e){}
+
+
+    if(currentCategory==="Favorites"){
+
+        selected=0;
+
+    }
+
+    renderCurrent();
+
+}
+
+
+/* =====================================================
+   CURRENT RENDER
+===================================================== */
+
+function renderCurrent(){
+
+    if(mode==="categories"){
+
+        renderCategories();
+
+    }else{
+
+        renderSites();
+
+    }
 
 }
 
@@ -923,101 +768,47 @@ render();
 
 function select(){
 
-if(mode==="home"){
+    if(mode==="categories"){
 
-if(index===0){
+        if(selected===0){
 
-mode="list";
-cat=0;
-index=0;
+            currentCategory="All";
+            selected=0;
+            renderSites();
 
-}
+            return;
 
-else if(index===1){
-
-mode="fav";
-cat=1;
-index=0;
-
-}
-
-else{
-
-mode="list";
-cat=index;
-index=0;
-
-}
-
-render();
-
-return;
-
-}
+        }
 
 
-if(mode==="settings"){
+        if(selected===1){
 
-settingsAction();
+            currentCategory="Favorites";
+            selected=0;
+            renderSites();
 
-return;
+            return;
 
-}
-
-
-let a=
-mode==="recent"
-?
-recent.map(i=>sites[i]).filter(Boolean)
-:
-list();
-
-if(a[index])
-openSite(a[index]);
-
-}
+        }
 
 
-/* =====================================================
-   SEARCH
-===================================================== */
+        if(categories[selected]){
 
-function goSearch(){
+            currentCategory=
+            categories[selected];
 
-mode="search";
-query="";
-index=0;
+            selected=0;
 
-render();
+            renderSites();
 
-}
+        }
 
+    }
+    else{
 
-/* =====================================================
-   FAVORITES
-===================================================== */
+        openSite();
 
-function openFav(){
-
-mode="fav";
-cat=1;
-index=0;
-
-render();
-
-}
-
-
-/* =====================================================
-   RECENT
-===================================================== */
-
-function openRecent(){
-
-mode="recent";
-index=0;
-
-render();
+    }
 
 }
 
@@ -1028,110 +819,256 @@ render();
 
 function back(){
 
-if(mode==="home")
-return;
+    if(mode==="sites"){
 
-mode="home";
-cat=0;
-index=0;
-query="";
+        selected=0;
 
-render();
+        renderCategories();
+
+    }
 
 }
 
 
 /* =====================================================
-   FAVORITE TOGGLE
+   MOVE
 ===================================================== */
 
-function favToggle(){
+function move(n){
 
-let a=
-mode==="recent"
-?
-recent.map(i=>sites[i]).filter(Boolean)
-:
-list();
+    var max;
 
-let s=a[index];
+    if(mode==="categories"){
 
-if(!s)return;
+        max=categories.length;
 
-let id=sites.indexOf(s);
+    }else{
 
-let p=fav.indexOf(id);
+        max=getList().length;
 
-if(p<0)
-fav.push(id);
-else
-fav.splice(p,1);
+    }
 
-localStorage.setItem(
-"cloudHub2Fav",
-JSON.stringify(fav)
-);
+    if(max<=0){
+        return;
+    }
 
-render();
+
+    selected+=n;
+
+
+    if(selected<0){
+
+        selected=max-1;
+
+    }
+
+
+    if(selected>=max){
+
+        selected=0;
+
+    }
+
+
+    renderCurrent();
 
 }
 
 
 /* =====================================================
-   SETTINGS
+   SCROLL
 ===================================================== */
 
-function settingsAction(){
+function scrollSelected(){
 
-if(index===0){
+    var rows=
+    document.querySelectorAll(
+        "#screen .row"
+    );
 
-theme=
-theme==="dark"
-?"light"
-:"dark";
+    if(
+        rows[selected]
+    ){
 
-localStorage.setItem(
-"cloudHub2Theme",
-theme
-);
+        rows[selected].scrollIntoView({
+            block:"nearest"
+        });
 
-}
-
-else if(index===1){
-
-font=
-font==="normal"
-?"large"
-:
-font==="large"
-?"small"
-:"normal";
-
-localStorage.setItem(
-"cloudHub2Font",
-font
-);
+    }
 
 }
 
-else if(index===2){
 
-zoom=
-zoom>=1.15
-?
-0.9
-:
-zoom>=1
-?
-1.15
-:
-1;
+/* =====================================================
+   ZOOM
+===================================================== */
 
-localStorage.setItem(
-"cloudHub2Zoom",
-String(zoom)
-);
+function setZoom(value,button){
+
+    var screen=
+    document.getElementById(
+        "screen"
+    );
+
+    screen.style.zoom=value;
+
+
+    var buttons=
+    document.querySelectorAll(
+        ".zoom"
+    );
+
+    var i;
+
+    for(i=0;i<buttons.length;i++){
+
+        buttons[i].className=
+        "zoom";
+
+    }
+
+    button.className=
+    "zoom active";
 
 }
 
-else
+
+/* =====================================================
+   KEYPAD
+===================================================== */
+
+document.addEventListener(
+"keydown",
+function(e){
+
+    var key=e.key;
+
+
+    /* UP */
+
+    if(
+        key==="ArrowUp" ||
+        key==="2"
+    ){
+
+        e.preventDefault();
+
+        move(-1);
+
+        return;
+
+    }
+
+
+    /* DOWN */
+
+    if(
+        key==="ArrowDown" ||
+        key==="8"
+    ){
+
+        e.preventDefault();
+
+        move(1);
+
+        return;
+
+    }
+
+
+    /* OPEN */
+
+    if(
+        key==="Enter" ||
+        key==="5" ||
+        key==="ArrowRight" ||
+        key==="6"
+    ){
+
+        e.preventDefault();
+
+        select();
+
+        return;
+
+    }
+
+
+    /* BACK */
+
+    if(
+        key==="Escape" ||
+        key==="#" ||
+        key==="ArrowLeft" ||
+        key==="4"
+    ){
+
+        e.preventDefault();
+
+        back();
+
+        return;
+
+    }
+
+
+    /* FAVORITE */
+
+    if(key==="*"){
+
+        e.preventDefault();
+
+        if(mode==="sites"){
+
+            toggleFavorite();
+
+        }
+
+        return;
+
+    }
+
+});
+
+
+/* =====================================================
+   MOUSE / SCREEN CLICK
+===================================================== */
+
+document.getElementById(
+    "screen"
+).addEventListener(
+    "click",
+    function(e){
+
+        var row=
+        e.target.closest(".row");
+
+        if(!row){
+            return;
+        }
+
+        selected=
+        parseInt(
+            row.getAttribute(
+                "data-i"
+            ),
+            10
+        );
+
+        select();
+
+    }
+);
+
+
+/* =====================================================
+   START
+===================================================== */
+
+renderCategories();
+
+</script>
+
+</body>
+</html>
