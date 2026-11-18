@@ -86,7 +86,8 @@ input {
 }
 
 input[type="file"] {
-    font-size: 9px;
+    display: block;
+    font-size: 10px;
 }
 
 button {
@@ -106,14 +107,14 @@ button:disabled {
     color: #cccccc;
 }
 
+.install {
+    background: #008c63;
+}
+
 #packageInfo {
     font-size: 11px;
     line-height: 1.5;
     overflow-wrap: anywhere;
-}
-
-.install {
-    background: #008c63;
 }
 
 .warning {
