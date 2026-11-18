@@ -2,24 +2,15 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Storage Test</title>
 </head>
 <body>
+<h3>Storage Permission Test</h3>
 
-<h3>RUTIK SYSTEM HUB</h3>
+<input type="file" id="f">
 
-<input type="file" id="file">
-
-<p id="result">Select a file</p>
-
-<script>
-document.getElementById("file").addEventListener("change", function() {
-    if(this.files.length > 0) {
-        document.getElementById("result").innerHTML =
-        "File: " + this.files[0].name;
-    }
-});
-</script>
+<button onclick="document.getElementById('f').click()">
+OPEN PHONE STORAGE
+</button>
 
 </body>
 </html>
