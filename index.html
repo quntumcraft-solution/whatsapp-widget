@@ -1,83 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUTIK SYSTEM HUB</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUTIK SYSTEM HUB</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="app">
+<header>
+    <div class="logo">R</div>
+    <div>
+        <h1>RUTIK SYSTEM HUB</h1>
+        <p>IT9020 Application Manager</p>
+    </div>
+</header>
 
-    <header>
-        <h2>RUTIK SYSTEM HUB</h2>
-        <p>Mobile Application Manager</p>
-    </header>
+<main>
 
-    <div class="status">
-        <span class="dot"></span> SYSTEM READY
+<section class="device">
+    <h2>DEVICE INFORMATION</h2>
+    <p>Device: itel Super Guru 4G</p>
+    <p>Model: IT9020</p>
+    <p>Platform: UMS9117 / LS2002</p>
+    <p>Firmware: V2.0</p>
+    <p id="browserStatus">Browser: Checking...</p>
+</section>
+
+<section class="panel">
+    <h2>FILE MANAGER</h2>
+
+    <input type="file" id="fileInput">
+
+    <button id="selectBtn">SELECT FILE</button>
+
+    <div class="file-info">
+        <p id="fileName">No file selected</p>
+        <p id="fileType">File Type: Unknown</p>
+        <p id="fileSize">File Size: --</p>
+        <p id="fileStatus">Status: Waiting</p>
     </div>
 
-    <section>
-        <h3>LOCAL APP INSTALLER</h3>
+    <button id="analyzeBtn" disabled>ANALYZE FILE</button>
+</section>
 
-        <p>Select application package</p>
+<section class="panel">
+    <h2>ONLINE FILE ACCESS</h2>
 
-        <input type="file"
-               id="fileInput"
-               accept="*/*"
-               onchange="checkFile()">
+    <input
+        type="url"
+        id="urlInput"
+        placeholder="Enter file URL"
+    >
 
-        <button onclick="openFilePicker()">
-            CHOOSE FILE
-        </button>
-    </section>
+    <button id="openUrlBtn">OPEN URL</button>
+    <button id="downloadUrlBtn">DOWNLOAD FILE</button>
+</section>
 
-    <section>
-        <h3>ONLINE DOWNLOAD</h3>
+<section class="panel">
+    <h2>JAVA APPLICATION MANAGER</h2>
 
-        <input type="url"
-               id="downloadUrl"
-               placeholder="Paste download URL">
+    <div id="javaInfo">
+        Java Runtime: Not Verified<br>
+        Native Installer: Not Verified
+    </div>
 
-        <button onclick="downloadFile()">
-            DOWNLOAD
-        </button>
-    </section>
-
-    <section>
-        <h3>PACKAGE INFORMATION</h3>
-
-        <div id="packageInfo">
-            No package selected.
-        </div>
-    </section>
-
-    <section>
-        <h3>DEVICE INFORMATION</h3>
-
-        <p>Device: itel IT9020</p>
-        <p>Screen: 240 × 320</p>
-        <p>Platform: UMS9117</p>
-    </section>
-
-    <button class="install" disabled>
-        INSTALL TO PHONE
+    <button id="installBtn" disabled>
+        INSTALL APPLICATION
     </button>
 
     <p class="warning">
-        Native installation support is not verified.
+        Native installation requires a supported phone installer.
     </p>
+</section>
 
-    <footer>
-        RUTIK SYSTEM HUB v1.1
-    </footer>
+<section class="panel">
+    <h2>FILE ANALYSIS</h2>
+    <pre id="analysisResult">No analysis available.</pre>
+</section>
 
-</div>
+</main>
+
+<footer>
+    RUTIK SYSTEM HUB<br>
+    Version 1.0 | IT9020 Edition
+</footer>
 
 <script src="app.js"></script>
-
 </body>
 </html>
