@@ -1,92 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RUTIK SYSTEM HUB</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<title>RUTIK VI LOGIN</title><style>
+* {
+    box-sizing: border-box;
+}
 
-<body>
+body {
+    margin: 0;
+    padding: 10px;
+    background: #f2f2f2;
+    font-family: Arial, sans-serif;
+}
 
-<header>
-    <div class="logo">R</div>
-    <div>
-        <h1>RUTIK SYSTEM HUB</h1>
-        <p>IT9020 Application Manager</p>
-    </div>
-</header>
+.container {
+    width: 100%;
+    max-width: 320px;
+    margin: 15px auto;
+    padding: 15px;
+    background: white;
+    border: 1px solid #ddd;
+}
 
-<main>
+.logo {
+    text-align: center;
+    color: #e60028;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
 
-<section class="device">
-    <h2>DEVICE INFORMATION</h2>
-    <p>Device: itel Super Guru 4G</p>
-    <p>Model: IT9020</p>
-    <p>Platform: UMS9117 / LS2002</p>
-    <p>Firmware: V2.0</p>
-    <p id="browserStatus">Browser: Checking...</p>
-</section>
+h2 {
+    text-align: center;
+    font-size: 18px;
+}
 
-<section class="panel">
-    <h2>FILE MANAGER</h2>
+p {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.5;
+}
 
-    <input type="file" id="fileInput">
+.button {
+    display: block;
+    width: 100%;
+    padding: 13px 5px;
+    margin-top: 20px;
+    background: #e60028;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+}
 
-    <button id="selectBtn">SELECT FILE</button>
+.footer {
+    margin-top: 20px;
+    color: #666;
+    font-size: 11px;
+}
+</style></head><body><div class="container"><div class="logo">Vi</div>
 
-    <div class="file-info">
-        <p id="fileName">No file selected</p>
-        <p id="fileType">File Type: Unknown</p>
-        <p id="fileSize">File Size: --</p>
-        <p id="fileStatus">Status: Waiting</p>
-    </div>
+<h2>Welcome to Vi</h2>
 
-    <button id="analyzeBtn" disabled>ANALYZE FILE</button>
-</section>
+<p>
+    Manage your Vi account,
+    recharge and check your services.
+</p>
 
-<section class="panel">
-    <h2>ONLINE FILE ACCESS</h2>
+<a class="button"
+   href="https://www.myvi.in/account/login">
+   OPEN VI LOGIN
+</a>
 
-    <input
-        type="url"
-        id="urlInput"
-        placeholder="Enter file URL"
-    >
+<p class="footer">
+    Official Vi Website
+</p>
 
-    <button id="openUrlBtn">OPEN URL</button>
-    <button id="downloadUrlBtn">DOWNLOAD FILE</button>
-</section>
-
-<section class="panel">
-    <h2>JAVA APPLICATION MANAGER</h2>
-
-    <div id="javaInfo">
-        Java Runtime: Not Verified<br>
-        Native Installer: Not Verified
-    </div>
-
-    <button id="installBtn" disabled>
-        INSTALL APPLICATION
-    </button>
-
-    <p class="warning">
-        Native installation requires a supported phone installer.
-    </p>
-</section>
-
-<section class="panel">
-    <h2>FILE ANALYSIS</h2>
-    <pre id="analysisResult">No analysis available.</pre>
-</section>
-
-</main>
-
-<footer>
-    RUTIK SYSTEM HUB<br>
-    Version 1.0 | IT9020 Edition
-</footer>
-
-<script src="app.js"></script>
-</body>
+</div></body>
 </html>
