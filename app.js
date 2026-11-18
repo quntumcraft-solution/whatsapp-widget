@@ -1,11 +1,22 @@
 var selectedFile = null;
 
+function openFilePicker() {
+
+    var input = document.getElementById("fileInput");
+
+    try {
+        input.click();
+    } catch (error) {
+        alert("File Picker is not supported by this browser.");
+    }
+}
+
 function checkFile() {
 
     var input = document.getElementById("fileInput");
 
     if (!input.files || input.files.length === 0) {
-        alert("Please select a package first.");
+        alert("No file selected.");
         return;
     }
 
@@ -23,11 +34,11 @@ function checkFile() {
     else if (extension === "jad") {
         type = "Java Application Descriptor";
     }
-    else if (extension === "pac") {
-        type = "Firmware Package";
-    }
     else if (extension === "zip") {
         type = "ZIP Archive";
+    }
+    else if (extension === "pac") {
+        type = "Firmware Package";
     }
     else if (extension === "apk") {
         type = "Android Application";
@@ -51,6 +62,7 @@ function downloadFile() {
 
     if (url.indexOf("https://") !== 0 &&
         url.indexOf("http://") !== 0) {
+
         alert("Enter a valid HTTP or HTTPS URL.");
         return;
     }
