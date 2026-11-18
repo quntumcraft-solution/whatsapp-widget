@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RUTIK SYSTEM HUB</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUTIK SYSTEM HUB</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <div class="app">
@@ -20,25 +21,35 @@
     </div>
 
     <section>
-        <h3>LOCAL INSTALLER</h3>
+        <h3>LOCAL APP INSTALLER</h3>
+
         <p>Select application package</p>
 
-        <input type="file" id="fileInput">
+        <input type="file"
+               id="fileInput"
+               accept="*/*"
+               onchange="checkFile()">
 
-        <button onclick="checkFile()">CHECK PACKAGE</button>
+        <button onclick="openFilePicker()">
+            CHOOSE FILE
+        </button>
     </section>
 
     <section>
         <h3>ONLINE DOWNLOAD</h3>
 
-        <input type="url" id="downloadUrl"
-        placeholder="Paste download URL">
+        <input type="url"
+               id="downloadUrl"
+               placeholder="Paste download URL">
 
-        <button onclick="downloadFile()">DOWNLOAD</button>
+        <button onclick="downloadFile()">
+            DOWNLOAD
+        </button>
     </section>
 
     <section>
         <h3>PACKAGE INFORMATION</h3>
+
         <div id="packageInfo">
             No package selected.
         </div>
@@ -46,6 +57,7 @@
 
     <section>
         <h3>DEVICE INFORMATION</h3>
+
         <p>Device: itel IT9020</p>
         <p>Screen: 240 × 320</p>
         <p>Platform: UMS9117</p>
@@ -60,11 +72,12 @@
     </p>
 
     <footer>
-        RUTIK SYSTEM HUB v1.0
+        RUTIK SYSTEM HUB v1.1
     </footer>
 
 </div>
 
 <script src="app.js"></script>
+
 </body>
 </html>
