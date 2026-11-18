@@ -1,83 +1,25 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RUTIK VI LOGIN</title><style>
-* {
-    box-sizing: border-box;
-}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Storage Test</title>
+</head>
+<body>
 
-body {
-    margin: 0;
-    padding: 10px;
-    background: #f2f2f2;
-    font-family: Arial, sans-serif;
-}
+<h3>RUTIK SYSTEM HUB</h3>
 
-.container {
-    width: 100%;
-    max-width: 320px;
-    margin: 15px auto;
-    padding: 15px;
-    background: white;
-    border: 1px solid #ddd;
-}
+<input type="file" id="file">
 
-.logo {
-    text-align: center;
-    color: #e60028;
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
+<p id="result">Select a file</p>
 
-h2 {
-    text-align: center;
-    font-size: 18px;
-}
+<script>
+document.getElementById("file").addEventListener("change", function() {
+    if(this.files.length > 0) {
+        document.getElementById("result").innerHTML =
+        "File: " + this.files[0].name;
+    }
+});
+</script>
 
-p {
-    text-align: center;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.button {
-    display: block;
-    width: 100%;
-    padding: 13px 5px;
-    margin-top: 20px;
-    background: #e60028;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 4px;
-}
-
-.footer {
-    margin-top: 20px;
-    color: #666;
-    font-size: 11px;
-}
-</style></head><body><div class="container"><div class="logo">Vi</div>
-
-<h2>Welcome to Vi</h2>
-
-<p>
-    Manage your Vi account,
-    recharge and check your services.
-</p>
-
-<a class="button"
-   href="https://www.myvi.in/account/login">
-   OPEN VI LOGIN
-</a>
-
-<p class="footer">
-    Official Vi Website
-</p>
-
-</div></body>
+</body>
 </html>
