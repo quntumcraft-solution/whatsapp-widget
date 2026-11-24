@@ -1,51 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>RUTIK CINEMA</title>
-
-<style>
+<title>RUTIK CINEMA</title><style>
 *{box-sizing:border-box}
-body{
- margin:0;background:#090909;color:white;
- font-family:Arial,sans-serif;font-size:12px
-}
-header{
- background:#151515;padding:10px;
- border-bottom:2px solid #e50914
-}
+body{margin:0;background:#090909;color:white;font-family:Arial,sans-serif;font-size:12px}
+header{background:#151515;padding:10px;border-bottom:2px solid #e50914}
 .logo{font-size:20px;font-weight:bold;color:#e50914}
 .sub{font-size:9px;color:#aaa;margin-top:3px}
 nav{display:flex;gap:4px;padding:7px;background:#111}
-button{
- background:#292929;color:white;border:0;
- border-radius:4px;padding:8px;font-size:11px
-}
-button:focus,input:focus,.card:focus{
- outline:2px solid #e50914
-}
+button{background:#292929;color:white;border:0;border-radius:4px;padding:8px;font-size:11px}
+button:focus,input:focus,.card:focus{outline:2px solid #e50914;background:#401014}
 .active{background:#e50914}
 main{padding:8px}
-input{
- width:100%;padding:10px;background:#171717;
- border:1px solid #444;color:white;border-radius:4px;
- margin-bottom:7px
-}
-#grid{
- display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
- gap:7px
-}
-.card{
- background:#181818;border:1px solid #333;
- border-radius:5px;overflow:hidden
-}
-.poster{
- height:90px;background:linear-gradient(135deg,#333,#111);
- display:flex;align-items:center;justify-content:center;
- text-align:center;padding:5px;font-weight:bold;
- color:#ddd
-}
+input{width:100%;padding:10px;background:#171717;border:1px solid #444;color:white;border-radius:4px;margin-bottom:7px}
+#grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.card{background:#181818;border:1px solid #333;border-radius:5px;overflow:hidden;min-width:0}
+.poster{height:90px;background:linear-gradient(135deg,#333,#111);display:flex;align-items:center;justify-content:center;text-align:center;padding:5px;font-weight:bold;color:#ddd}
 .poster img{width:100%;height:100%;object-fit:cover}
 .info{padding:6px}
 .title{font-weight:bold;font-size:12px}
@@ -61,81 +32,44 @@ video{width:100%;max-height:220px;background:#000}
 #status{color:#ffb4b4;font-size:10px;margin:7px 0}
 #loading{text-align:center;padding:15px;color:#aaa}
 footer{text-align:center;padding:15px;color:#666;font-size:9px}
-.hide{display:none!important}
-</style>
-</head>
-
-<body>
-
-<header>
+</style></head><body><header>
  <div class="logo">RUTIK CINEMA</div>
  <div class="sub">MOVIES • DISCOVERY • WATCH</div>
-</header>
-
-<nav>
- <button class="active" onclick="home(this)">HOME</button>
+</header><nav>
+ <button class="active" onclick="loadTrending(this)">HOME</button>
  <button onclick="loadTrending(this)">TRENDING</button>
  <button onclick="showWatchlist(this)">MY LIST</button>
-</nav>
-
-<main>
-
-<input id="search" placeholder="Search movies..." 
- onkeydown="if(event.key==='Enter')searchMovies()">
-
-<div class="row">
+</nav><main><input id="search" placeholder="Search movies..." onkeydown="if(event.key==='Enter')searchMovies()"><div class="row">
  <button onclick="searchMovies()">SEARCH</button>
  <button onclick="showRecent()">RECENT</button>
-</div>
-
-<div id="loading">Loading movies...</div>
-<div id="grid"></div>
-
-<section id="detail">
+</div><div id="loading">Loading movies...</div>
+<div id="grid"></div><section id="detail">
  <button onclick="goBack()">← BACK</button>
  <h2 id="dtitle"></h2>
  <div class="small" id="dmeta"></div>
  <p id="description"></p>
- <div class="small" id="license"></div>
-
- <div class="row">
+ <div class="small" id="license"></div> <div class="row">
   <button onclick="playMovie()">▶ PLAY MOVIE</button>
   <button onclick="toggleWatchlist()">+ MY LIST</button>
- </div>
-
- <div id="status"></div>
-
- <div id="playerBox">
+ </div> <div id="status"></div> <div id="playerBox">
   <video id="video" controls playsinline preload="metadata"></video>
   <div class="row">
    <button onclick="togglePlay()">PLAY / PAUSE</button>
    <button onclick="stopVideo()">STOP</button>
   </div>
- </div>
-
- <div class="small" id="fileInfo"></div>
-</section>
-
-</main>
-
-<footer>RUTIK CINEMA • CLOUD PHONE EDITION</footer>
-
-<script>
+ </div> <div class="small" id="fileInfo"></div>
+</section></main><footer>RUTIK CINEMA • CLOUD PHONE EDITION</footer><script>
 const API="https://archive.org";
+
 let movies=[];
 let current=null;
 let currentFile=null;
 let lastPage="home";
-let page=1;
 
 const grid=document.getElementById("grid");
 const loading=document.getElementById("loading");
 const detail=document.getElementById("detail");
 const video=document.getElementById("video");
-
-function safeText(v){
- return String(v||"").replace(/<[^>]*>/g,"").trim();
-}
 
 function showLoading(msg){
  loading.style.display="block";
@@ -146,35 +80,36 @@ function hideLoading(){
  loading.style.display="none";
 }
 
-function home(btn){
- stopVideo();
- detail.style.display="none";
- grid.style.display="grid";
- document.getElementById("search").style.display="block";
- lastPage="home";
- page=1;
- loadTrending(btn);
+function escapeQuery(s){
+ return s.replace(/[+\-&|!(){}[\]^"~*?:\\/]/g," ").trim();
 }
 
 async function loadTrending(btn){
+ stopVideo();
+
  if(btn){
   document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
  }
+
  lastPage="home";
  document.getElementById("search").value="";
+ document.getElementById("search").style.display="block";
+ detail.style.display="none";
+
  await searchArchive("mediatype:movies AND collection:feature_films");
 }
 
 async function searchMovies(){
  const q=document.getElementById("search").value.trim();
- if(!q){alert("Enter movie name");return}
+
+ if(!q){
+  alert("Enter movie name");
+  return;
+ }
+
  lastPage="search";
  await searchArchive('mediatype:movies AND title:('+escapeQuery(q)+')');
-}
-
-function escapeQuery(s){
- return s.replace(/[+\-&|!(){}[\]^"~*?:\\/]/g," ").trim();
 }
 
 async function searchArchive(query){
@@ -188,6 +123,7 @@ async function searchArchive(query){
   "&fl[]=identifier&fl[]=title&fl[]=year&fl[]=description&fl[]=creator&fl[]=licenseurl&rows=30&page=1&output=json";
 
   const r=await fetch(url);
+
   if(!r.ok)throw Error("Search service unavailable");
 
   const data=await r.json();
@@ -209,7 +145,8 @@ async function searchArchive(query){
 
 function renderMovies(list){
  grid.innerHTML="";
- list.forEach((m)=>{
+
+ list.forEach(m=>{
   const card=document.createElement("div");
   card.className="card";
   card.tabIndex=0;
@@ -233,38 +170,27 @@ function renderMovies(list){
   card.append(poster,info);
 
   card.onclick=()=>openMovie(m);
-  card.onkeydown=e=>{if(e.key==="Enter")openMovie(m)};
+  card.onkeydown=e=>{
+   if(e.key==="Enter")openMovie(m);
+  };
 
   grid.appendChild(card);
 
-  getThumb(m.identifier).then(url=>{
-   if(url){
-    const img=new Image();
-    img.src=url;
-    img.onload=()=>{
-     poster.textContent="";
-     poster.appendChild(img);
-    };
-   }
-  });
- });
-}
+  const thumb=API+"/services/img/"+encodeURIComponent(m.identifier);
+  const img=new Image();
+  img.src=thumb;
 
-async function getThumb(id){
- try{
-  const u=API+"/metadata/"+encodeURIComponent(id)+"/metadata";
-  const r=await fetch(u);
-  const d=await r.json();
-  const md=d.result||d.metadata||{};
-  return md.image?API+"/download/"+id+"/"+md.image:
-   "https://archive.org/services/img/"+encodeURIComponent(id);
- }catch(e){
-  return "https://archive.org/services/img/"+encodeURIComponent(id);
- }
+  img.onload=()=>{
+   poster.textContent="";
+   poster.appendChild(img);
+  };
+ });
 }
 
 async function openMovie(m){
  current=m;
+ currentFile=null;
+
  stopVideo();
 
  grid.style.display="none";
@@ -272,11 +198,12 @@ async function openMovie(m){
  detail.style.display="block";
 
  document.getElementById("dtitle").textContent=m.title||m.identifier;
+
  document.getElementById("dmeta").textContent=
   (m.year||"Year unknown")+" • "+(m.creator||"Creator unknown");
 
  document.getElementById("description").textContent=
-  safeText(m.description||"No description available.");
+  m.description||"No description available.";
 
  document.getElementById("license").textContent=
   "License: "+(m.licenseurl||"Not specified. Check the item's rights information.");
@@ -285,10 +212,9 @@ async function openMovie(m){
  document.getElementById("fileInfo").textContent="";
  document.getElementById("playerBox").style.display="none";
 
- currentFile=null;
-
  try{
   const r=await fetch(API+"/metadata/"+encodeURIComponent(m.identifier));
+
   if(!r.ok)throw Error("Metadata unavailable");
 
   const data=await r.json();
@@ -313,11 +239,10 @@ async function openMovie(m){
   currentFile=mp4[0];
 
   document.getElementById("status").textContent=
-   "Video file found. Check rights and press PLAY MOVIE.";
+   "Video file found. Press PLAY MOVIE.";
 
   document.getElementById("fileInfo").textContent=
-   "File: "+currentFile.name+
-   " • Size: "+formatSize(currentFile.size);
+   "File: "+currentFile.name+" • Size: "+formatSize(currentFile.size);
 
  }catch(e){
   document.getElementById("status").textContent=
@@ -327,36 +252,42 @@ async function openMovie(m){
 
 function formatSize(n){
  n=Number(n||0);
+
  if(n>1073741824)return (n/1073741824).toFixed(2)+" GB";
+
  return (n/1048576).toFixed(1)+" MB";
 }
 
+/* UPDATED PLAYBACK FUNCTION */
+
 function playMovie(){
+
  if(!currentFile||!current){
   document.getElementById("status").textContent=
    "No playable video file found.";
   return;
  }
 
- const rights=(current.licenseurl||"").toLowerCase();
- const desc=(current.description||"").toLowerCase();
+ const rights=current.licenseurl||"Not specified";
 
- const allowed=
-  rights.includes("creativecommons.org/publicdomain")||
-  rights.includes("creativecommons.org/licenses")||
-  desc.includes("public domain");
+ const confirmPlay=confirm(
+  "VIDEO RIGHTS NOTICE\n\n"+
+  "Movie: "+current.title+"\n\n"+
+  "License: "+rights+"\n\n"+
+  "Please check the item's rights information and confirm that you are permitted to watch this video.\n\n"+
+  "Continue?"
+ );
 
- if(!allowed){
-  document.getElementById("status").textContent=
-   "Rights not verified. Please check the item's rights page before playing.";
-  return;
- }
+ if(!confirmPlay)return;
 
  const url=API+"/download/"+
   encodeURIComponent(current.identifier)+"/"+
   currentFile.name.split("/").map(encodeURIComponent).join("/");
 
  video.pause();
+ video.removeAttribute("src");
+ video.load();
+
  video.src=url;
  video.load();
 
@@ -364,17 +295,25 @@ function playMovie(){
  document.getElementById("status").textContent="Loading video...";
 
  video.play().then(()=>{
-  document.getElementById("status").textContent="Playing movie.";
+  document.getElementById("status").textContent="Movie Playing!";
   saveRecent(current);
  }).catch(()=>{
   document.getElementById("status").textContent=
-   "Playback could not start. Try another MP4 file or check browser support.";
+   "Playback failed. Check video format, browser support or server access.";
  });
+
+ video.onerror=function(){
+  document.getElementById("status").textContent=
+   "Video could not be loaded. Try another available file.";
+ };
 }
 
 function togglePlay(){
- if(video.paused)video.play().catch(()=>{});
- else video.pause();
+ if(video.paused){
+  video.play().catch(()=>{});
+ }else{
+  video.pause();
+ }
 }
 
 function stopVideo(){
@@ -392,32 +331,45 @@ function goBack(){
 }
 
 function getList(key){
- try{return JSON.parse(localStorage.getItem(key)||"[]")}
- catch(e){return []}
+ try{
+  return JSON.parse(localStorage.getItem(key)||"[]");
+ }catch(e){
+  return [];
+ }
 }
 
 function toggleWatchlist(){
  if(!current)return;
+
  let list=getList("rc_watchlist");
+
  const i=list.findIndex(x=>x.identifier===current.identifier);
 
- if(i>=0)list.splice(i,1);
- else list.push(current);
+ if(i>=0){
+  list.splice(i,1);
+ }else{
+  list.push(current);
+ }
 
  localStorage.setItem("rc_watchlist",JSON.stringify(list));
+
  alert(i>=0?"Removed from My List":"Added to My List");
 }
 
 function saveRecent(m){
  let list=getList("rc_recent");
+
  list=list.filter(x=>x.identifier!==m.identifier);
  list.unshift(m);
+
  localStorage.setItem("rc_recent",JSON.stringify(list.slice(0,20)));
 }
 
 function showWatchlist(btn){
  stopVideo();
+
  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+
  if(btn)btn.classList.add("active");
 
  detail.style.display="none";
@@ -425,6 +377,7 @@ function showWatchlist(btn){
  document.getElementById("search").style.display="none";
 
  const list=getList("rc_watchlist");
+
  hideLoading();
  grid.innerHTML="";
 
@@ -432,16 +385,19 @@ function showWatchlist(btn){
   showLoading("Your watchlist is empty.");
   return;
  }
+
  renderMovies(list);
 }
 
 function showRecent(){
  stopVideo();
+
  detail.style.display="none";
  grid.style.display="grid";
  document.getElementById("search").style.display="none";
 
  const list=getList("rc_recent");
+
  hideLoading();
  grid.innerHTML="";
 
@@ -449,27 +405,18 @@ function showRecent(){
   showLoading("No recently watched movies.");
   return;
  }
- renderMovies(list);
-}
 
-function loadTrending(btn){
- if(btn){
-  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
- }
- lastPage="home";
- document.getElementById("search").value="";
- searchArchive("mediatype:movies AND collection:feature_films");
+ renderMovies(list);
 }
 
 document.addEventListener("keydown",e=>{
  if(e.key==="Escape"||e.key==="Backspace"){
-  if(detail.style.display==="block")goBack();
+  if(detail.style.display==="block"){
+   goBack();
+  }
  }
 });
 
 loadTrending();
-</script>
-
-</body>
- </html>
+</script></body>
+</html>
