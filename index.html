@@ -1,173 +1,475 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>NETMIRROR CLOUD</title>
+<title>RUTIK CINEMA</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif;font-size:12px}
-header{background:#151515;padding:10px 8px;border-bottom:2px solid #e50914}
-.logo{font-size:19px;font-weight:bold;color:#e50914}
+body{
+ margin:0;background:#090909;color:white;
+ font-family:Arial,sans-serif;font-size:12px
+}
+header{
+ background:#151515;padding:10px;
+ border-bottom:2px solid #e50914
+}
+.logo{font-size:20px;font-weight:bold;color:#e50914}
 .sub{font-size:9px;color:#aaa;margin-top:3px}
-nav{display:flex;gap:5px;padding:7px;background:#111}
-button{border:0;border-radius:3px;background:#292929;color:white;padding:7px 9px;font-size:11px}
-button:focus,.card:focus{outline:2px solid #e50914;background:#471015}
-nav button.active{background:#e50914}
-input{width:100%;background:#171717;border:1px solid #444;color:white;padding:9px;border-radius:4px}
+nav{display:flex;gap:4px;padding:7px;background:#111}
+button{
+ background:#292929;color:white;border:0;
+ border-radius:4px;padding:8px;font-size:11px
+}
+button:focus,input:focus,.card:focus{
+ outline:2px solid #e50914
+}
+.active{background:#e50914}
 main{padding:8px}
-#grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-.card{background:#171717;border:1px solid #333;border-radius:5px;overflow:hidden;min-width:0}
-.poster{height:75px;background:linear-gradient(135deg,#292929,#101010);display:flex;align-items:center;justify-content:center;text-align:center;padding:5px;color:#ddd;font-size:13px;font-weight:bold}
+input{
+ width:100%;padding:10px;background:#171717;
+ border:1px solid #444;color:white;border-radius:4px;
+ margin-bottom:7px
+}
+#grid{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:7px
+}
+.card{
+ background:#181818;border:1px solid #333;
+ border-radius:5px;overflow:hidden
+}
+.poster{
+ height:90px;background:linear-gradient(135deg,#333,#111);
+ display:flex;align-items:center;justify-content:center;
+ text-align:center;padding:5px;font-weight:bold;
+ color:#ddd
+}
+.poster img{width:100%;height:100%;object-fit:cover}
 .info{padding:6px}
-.title{font-weight:bold;font-size:12px;line-height:16px}
-.meta{font-size:10px;color:#aaa;margin-top:4px}
-.tag{color:#e50914;font-size:9px;margin-top:4px}
-#detail{display:none;background:#151515;padding:10px;border-radius:5px}
-#detail h2{font-size:17px;margin:5px 0}
-#desc{color:#ccc;line-height:17px;margin:8px 0}
+.title{font-weight:bold;font-size:12px}
+.meta{color:#aaa;font-size:10px;margin-top:4px}
+#detail{display:none;background:#151515;padding:9px;border-radius:5px}
+#detail h2{font-size:17px}
+#description{color:#ccc;line-height:17px}
 #playerBox{display:none;background:#000;margin-top:8px}
-video{width:100%;max-height:190px;background:#000}
-.row{display:flex;gap:5px;flex-wrap:wrap;margin:7px 0}
+video{width:100%;max-height:220px;background:#000}
+.row{display:flex;gap:5px;margin:7px 0;flex-wrap:wrap}
 .row button{flex:1}
-.small{color:#aaa;font-size:10px;line-height:16px}
-#status{color:#ffb4b4;font-size:10px;margin:6px 0}
-footer{padding:12px;text-align:center;color:#666;font-size:9px}
+.small{font-size:10px;color:#aaa;line-height:16px}
+#status{color:#ffb4b4;font-size:10px;margin:7px 0}
+#loading{text-align:center;padding:15px;color:#aaa}
+footer{text-align:center;padding:15px;color:#666;font-size:9px}
 .hide{display:none!important}
 </style>
 </head>
-<body>
-<header>
- <div class="logo">NETMIRROR</div>
- <div class="sub">CLOUD PHONE EDITION</div>
-</header><nav>
- <button class="active" id="allBtn" onclick="setTab('all',this)">ALL</button>
- <button id="movieBtn" onclick="setTab('m',this)">MOVIES</button>
- <button id="seriesBtn" onclick="setTab('t',this)">SERIES</button>
-</nav><main>
- <input id="search" placeholder="Search movies / series..." oninput="render()">
- <div class="row">
-  <button onclick="showHome()">HOME</button>
-  <button onclick="showLast()">LAST PLAYED</button>
- </div> <div id="grid"></div> <section id="detail">
-  <button onclick="showHome()">← BACK</button>
-  <h2 id="dtitle"></h2>
-  <div class="small" id="dmeta"></div>
-  <div id="desc"></div>
-  <div class="small" id="cast"></div>
-  <div class="small" id="genre"></div>
-  <div class="row">
-   <button onclick="addStream()">ADD / CHANGE STREAM</button>
-   <button onclick="playCurrent()">▶ PLAY</button>
-  </div>
-  <div id="status"></div>
-  <div id="playerBox">
-   <video id="video" controls playsinline preload="metadata"></video>
-   <div class="row">
-    <button onclick="togglePlay()">PLAY / PAUSE</button>
-    <button onclick="stopVideo()">STOP</button>
-   </div>
-  </div>
-  <p class="small">Playback supports direct MP4 and HLS streams if the phone browser supports the format. Stream access must be authorized.</p>
- </section>
-</main><footer>NETMIRROR CLOUD • LIGHTWEIGHT PLAYER</footer><script>
-const data = [
-{title:"Thangalaan",year:"2024",type:"m",runtime:"2h 28m",rating:"U/A 16+",lang:"English",director:"Pa. Ranjith",cast:"Vikram, Parvathy, Malavika Mohanan, Daniel Caltagirone, Pasupathy",genre:"Action & Adventure Movies, Tamil-Language Movies",desc:"To defeat an oppressive landlord, a tribal leader joins a British explorer in a risky search for gold in terrain protected by a feared mystical force."},
-{title:"Animal",year:"2023",type:"m",runtime:"3h 21m",rating:"U/A 18+ [A]",lang:"English",director:"Sandeep Reddy Vanga",cast:"Ranbir Kapoor, Anil Kapoor, Bobby Deol, Rashmika Mandanna, Triptii Dimri",genre:"Hindi-Language Movies, Bollywood Movies, Crime Movies, Action & Adventure",desc:"A turbulent story of family, loyalty and violence."},
-{title:"Shadow and Bone",year:"2021",type:"t",runtime:"2 Seasons",rating:"U/A 16+",lang:"English",director:"",cast:"Jessie Mei Li, Archie Renaux, Ben Barnes, Freddy Carter, Amita Suman",genre:"Fantasy, TV Dramas",desc:"A young soldier discovers a power that could unite her world."},
-{title:"Vincenzo",year:"2021",type:"t",runtime:"1 Season",rating:"U/A 16+",lang:"English",director:"",cast:"Song Joong-ki, Jeon Yeo-been, Ok Taec-yeon, Yoo Jae-myung",genre:"TV Dramas, Korean, TV Comedies",desc:"A Korean-Italian mafia lawyer returns to Korea."},
-{title:"Friends",year:"1994",type:"t",runtime:"10 Seasons",rating:"U/A 13+",lang:"English",director:"",cast:"Jennifer Aniston, Courteney Cox, Lisa Kudrow, Matt LeBlanc, Matthew Perry, David Schwimmer",genre:"Sitcoms, TV Comedies, US TV Shows",desc:"Six friends navigate life, love and friendship in New York."},
-{title:"Vettaiyan",year:"2024",type:"m",runtime:"2h 41m",rating:"U/A 13+",lang:"English",director:"T.J. Gananavel",cast:"Rajinikanth, Amitabh Bachchan, Fahadh Faasil, Rana Daggubati, Manju Warrier",genre:"Drama, Action",desc:"A police officer confronts a complex case and questions of justice."},
-{title:"Drishyam 2 (Hindi)",year:"2022",type:"m",runtime:"2h 19m",rating:"U/A 13+",lang:"Hindi",director:"Abhishek Pathak",cast:"Ajay Devgn, Shriya Saran, Tabu, Akshaye Khanna, Ishita Dutta",genre:"Suspense, Drama, International",desc:"A family faces the consequences of a crime and an investigation."},
-{title:"Pathaan",year:"2023",type:"m",runtime:"2h 29m",rating:"U/A 13+",lang:"English",director:"Siddharth Anand",cast:"Shah Rukh Khan, Deepika Padukone, John Abraham, Dimple Kapadia",genre:"Action, Suspense, International, Adventure",desc:"An Indian agent takes on a dangerous mission."},
-{title:"The Flash",year:"2015",type:"t",runtime:"Series",rating:"U/A 13+",lang:"English",director:"Mario Azzopardi, Bruce Bilson",cast:"Grant Gustin, Candice Patton, Danielle Panabaker, Carlos Valdes",genre:"Action, Fantasy, Science Fiction, Adventure",desc:"A fast-paced superhero story about a man with extraordinary speed."},
-{title:"Mirzapur",year:"2018",type:"t",runtime:"Series",rating:"U/A 18+ [A]",lang:"English",director:"",cast:"Ali Fazal, Vikrant Massey, Pankaj Tripathi, Divyenndu, Shweta Tripathi",genre:"Drama",desc:"A story of power, crime and rivalry."},
-{title:"The Summer I Turned Pretty",year:"2022",type:"t",runtime:"Series",rating:"U/A 16+",lang:"English",director:"Jesse Peretz, Jeff Chan, Erica Dunton",cast:"Lola Tung, Jackie Chung, Rachel Blanchard, Christopher Briney",genre:"Drama, Romance",desc:"A coming-of-age story about love, friendship and family."}
-];
 
-let tab="all", current=null;
-const streamsKey="nm_authorized_streams";
-function streams(){try{return JSON.parse(localStorage.getItem(streamsKey)||"{}")}catch(e){return {}}}
-function saveStreams(x){localStorage.setItem(streamsKey,JSON.stringify(x))}
-function render(){
- const q=document.getElementById("search").value.toLowerCase();
- let list=data.filter(x=>(tab==="all"||x.type===tab)&&
- (x.title+" "+x.year+" "+x.genre+" "+x.cast).toLowerCase().includes(q));
- document.getElementById("grid").innerHTML=list.map(x=>{
- let i=data.indexOf(x);
- return `<div class="card" tabindex="0" onclick="openDetail(${i})" onkeydown="if(event.key==='Enter')openDetail(${i})">
- <div class="poster">${x.title}</div><div class="info">
- <div class="title">${x.title}</div>
- <div class="meta">${x.year} • ${x.runtime}</div>
- <div class="tag">${x.type==="m"?"MOVIE":"SERIES"} • ${x.rating}</div>
- </div></div>`;
- }).join("");
+<body>
+
+<header>
+ <div class="logo">RUTIK CINEMA</div>
+ <div class="sub">MOVIES • DISCOVERY • WATCH</div>
+</header>
+
+<nav>
+ <button class="active" onclick="home(this)">HOME</button>
+ <button onclick="loadTrending(this)">TRENDING</button>
+ <button onclick="showWatchlist(this)">MY LIST</button>
+</nav>
+
+<main>
+
+<input id="search" placeholder="Search movies..." 
+ onkeydown="if(event.key==='Enter')searchMovies()">
+
+<div class="row">
+ <button onclick="searchMovies()">SEARCH</button>
+ <button onclick="showRecent()">RECENT</button>
+</div>
+
+<div id="loading">Loading movies...</div>
+<div id="grid"></div>
+
+<section id="detail">
+ <button onclick="goBack()">← BACK</button>
+ <h2 id="dtitle"></h2>
+ <div class="small" id="dmeta"></div>
+ <p id="description"></p>
+ <div class="small" id="license"></div>
+
+ <div class="row">
+  <button onclick="playMovie()">▶ PLAY MOVIE</button>
+  <button onclick="toggleWatchlist()">+ MY LIST</button>
+ </div>
+
+ <div id="status"></div>
+
+ <div id="playerBox">
+  <video id="video" controls playsinline preload="metadata"></video>
+  <div class="row">
+   <button onclick="togglePlay()">PLAY / PAUSE</button>
+   <button onclick="stopVideo()">STOP</button>
+  </div>
+ </div>
+
+ <div class="small" id="fileInfo"></div>
+</section>
+
+</main>
+
+<footer>RUTIK CINEMA • CLOUD PHONE EDITION</footer>
+
+<script>
+const API="https://archive.org";
+let movies=[];
+let current=null;
+let currentFile=null;
+let lastPage="home";
+let page=1;
+
+const grid=document.getElementById("grid");
+const loading=document.getElementById("loading");
+const detail=document.getElementById("detail");
+const video=document.getElementById("video");
+
+function safeText(v){
+ return String(v||"").replace(/<[^>]*>/g,"").trim();
 }
-function setTab(t,b){
- tab=t;
- document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
- b.classList.add("active");showHome();render();
+
+function showLoading(msg){
+ loading.style.display="block";
+ loading.textContent=msg;
 }
-function showHome(){
- document.getElementById("detail").style.display="none";
- document.getElementById("grid").style.display="grid";
+
+function hideLoading(){
+ loading.style.display="none";
+}
+
+function home(btn){
+ stopVideo();
+ detail.style.display="none";
+ grid.style.display="grid";
  document.getElementById("search").style.display="block";
- document.getElementById("playerBox").style.display="none";
+ lastPage="home";
+ page=1;
+ loadTrending(btn);
 }
-function openDetail(i){
- current=data[i];
- document.getElementById("grid").style.display="none";
+
+async function loadTrending(btn){
+ if(btn){
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+ }
+ lastPage="home";
+ document.getElementById("search").value="";
+ await searchArchive("mediatype:movies AND collection:feature_films");
+}
+
+async function searchMovies(){
+ const q=document.getElementById("search").value.trim();
+ if(!q){alert("Enter movie name");return}
+ lastPage="search";
+ await searchArchive('mediatype:movies AND title:('+escapeQuery(q)+')');
+}
+
+function escapeQuery(s){
+ return s.replace(/[+\-&|!(){}[\]^"~*?:\\/]/g," ").trim();
+}
+
+async function searchArchive(query){
+ showLoading("Searching movies...");
+ grid.innerHTML="";
+ detail.style.display="none";
+ grid.style.display="grid";
+
+ try{
+  const url=API+"/advancedsearch.php?q="+encodeURIComponent(query)+
+  "&fl[]=identifier&fl[]=title&fl[]=year&fl[]=description&fl[]=creator&fl[]=licenseurl&rows=30&page=1&output=json";
+
+  const r=await fetch(url);
+  if(!r.ok)throw Error("Search service unavailable");
+
+  const data=await r.json();
+  movies=data.response.docs||[];
+
+  hideLoading();
+
+  if(!movies.length){
+   showLoading("No movies found. Try another search.");
+   return;
+  }
+
+  renderMovies(movies);
+
+ }catch(e){
+  showLoading("Internet connection or Archive search error.");
+ }
+}
+
+function renderMovies(list){
+ grid.innerHTML="";
+ list.forEach((m)=>{
+  const card=document.createElement("div");
+  card.className="card";
+  card.tabIndex=0;
+
+  const poster=document.createElement("div");
+  poster.className="poster";
+  poster.textContent=m.title||m.identifier;
+
+  const info=document.createElement("div");
+  info.className="info";
+
+  const title=document.createElement("div");
+  title.className="title";
+  title.textContent=m.title||m.identifier;
+
+  const meta=document.createElement("div");
+  meta.className="meta";
+  meta.textContent=(m.year||"Year unknown")+" • Internet Archive";
+
+  info.append(title,meta);
+  card.append(poster,info);
+
+  card.onclick=()=>openMovie(m);
+  card.onkeydown=e=>{if(e.key==="Enter")openMovie(m)};
+
+  grid.appendChild(card);
+
+  getThumb(m.identifier).then(url=>{
+   if(url){
+    const img=new Image();
+    img.src=url;
+    img.onload=()=>{
+     poster.textContent="";
+     poster.appendChild(img);
+    };
+   }
+  });
+ });
+}
+
+async function getThumb(id){
+ try{
+  const u=API+"/metadata/"+encodeURIComponent(id)+"/metadata";
+  const r=await fetch(u);
+  const d=await r.json();
+  const md=d.result||d.metadata||{};
+  return md.image?API+"/download/"+id+"/"+md.image:
+   "https://archive.org/services/img/"+encodeURIComponent(id);
+ }catch(e){
+  return "https://archive.org/services/img/"+encodeURIComponent(id);
+ }
+}
+
+async function openMovie(m){
+ current=m;
+ stopVideo();
+
+ grid.style.display="none";
  document.getElementById("search").style.display="none";
- document.getElementById("detail").style.display="block";
- document.getElementById("dtitle").textContent=current.title;
- document.getElementById("dmeta").textContent=current.year+" • "+current.runtime+" • "+current.rating;
- document.getElementById("desc").textContent=current.desc;
- document.getElementById("cast").textContent="CAST: "+current.cast;
- document.getElementById("genre").textContent="GENRE: "+current.genre;
- document.getElementById("status").textContent=streams()[current.title]?"Stream URL saved on this device.":"No stream URL saved.";
+ detail.style.display="block";
+
+ document.getElementById("dtitle").textContent=m.title||m.identifier;
+ document.getElementById("dmeta").textContent=
+  (m.year||"Year unknown")+" • "+(m.creator||"Creator unknown");
+
+ document.getElementById("description").textContent=
+  safeText(m.description||"No description available.");
+
+ document.getElementById("license").textContent=
+  "License: "+(m.licenseurl||"Not specified. Check the item's rights information.");
+
+ document.getElementById("status").textContent="Checking available video files...";
+ document.getElementById("fileInfo").textContent="";
  document.getElementById("playerBox").style.display="none";
+
+ currentFile=null;
+
+ try{
+  const r=await fetch(API+"/metadata/"+encodeURIComponent(m.identifier));
+  if(!r.ok)throw Error("Metadata unavailable");
+
+  const data=await r.json();
+  const files=data.files||[];
+
+  const mp4=files.filter(f=>
+   f.name &&
+   f.name.toLowerCase().endsWith(".mp4") &&
+   !f.name.toLowerCase().includes("sample") &&
+   !f.name.toLowerCase().includes("thumb") &&
+   Number(f.size||0)>1000000
+  );
+
+  mp4.sort((a,b)=>Number(b.size||0)-Number(a.size||0));
+
+  if(!mp4.length){
+   document.getElementById("status").textContent=
+    "No suitable MP4 file found for this item.";
+   return;
+  }
+
+  currentFile=mp4[0];
+
+  document.getElementById("status").textContent=
+   "Video file found. Check rights and press PLAY MOVIE.";
+
+  document.getElementById("fileInfo").textContent=
+   "File: "+currentFile.name+
+   " • Size: "+formatSize(currentFile.size);
+
+ }catch(e){
+  document.getElementById("status").textContent=
+   "Could not read video file information. Try another movie.";
+ }
 }
-function addStream(){
- if(!current)return;
- let old=streams()[current.title]||"";
- let u=prompt("Enter your authorized direct MP4 or HLS (.m3u8) URL:",old);
- if(u===null)return;
- u=u.trim();
- if(!u)return;
- if(!/^https?:\/\//i.test(u)){alert("Please enter a valid http/https URL.");return}
- let s=streams();s[current.title]=u;saveStreams(s);
- document.getElementById("status").textContent="Stream URL saved.";
+
+function formatSize(n){
+ n=Number(n||0);
+ if(n>1073741824)return (n/1073741824).toFixed(2)+" GB";
+ return (n/1048576).toFixed(1)+" MB";
 }
-function playCurrent(){
- if(!current)return;
- let u=streams()[current.title];
- if(!u){document.getElementById("status").textContent="Add an authorized MP4 or HLS stream URL first.";return}
- let v=document.getElementById("video");
+
+function playMovie(){
+ if(!currentFile||!current){
+  document.getElementById("status").textContent=
+   "No playable video file found.";
+  return;
+ }
+
+ const rights=(current.licenseurl||"").toLowerCase();
+ const desc=(current.description||"").toLowerCase();
+
+ const allowed=
+  rights.includes("creativecommons.org/publicdomain")||
+  rights.includes("creativecommons.org/licenses")||
+  desc.includes("public domain");
+
+ if(!allowed){
+  document.getElementById("status").textContent=
+   "Rights not verified. Please check the item's rights page before playing.";
+  return;
+ }
+
+ const url=API+"/download/"+
+  encodeURIComponent(current.identifier)+"/"+
+  currentFile.name.split("/").map(encodeURIComponent).join("/");
+
+ video.pause();
+ video.src=url;
+ video.load();
+
  document.getElementById("playerBox").style.display="block";
- v.pause();v.removeAttribute("src");v.load();
- v.src=u;v.load();
- v.play().then(()=>{document.getElementById("status").textContent="Playing.";})
- .catch(e=>{document.getElementById("status").textContent="Playback failed. Browser may not support this format, or the server may block access (CORS/auth).";});
- v.onerror=()=>{document.getElementById("status").textContent="Video error: unsupported format or stream unavailable."};
- localStorage.setItem("nm_last",current.title);
+ document.getElementById("status").textContent="Loading video...";
+
+ video.play().then(()=>{
+  document.getElementById("status").textContent="Playing movie.";
+  saveRecent(current);
+ }).catch(()=>{
+  document.getElementById("status").textContent=
+   "Playback could not start. Try another MP4 file or check browser support.";
+ });
 }
+
 function togglePlay(){
- let v=document.getElementById("video");
- if(v.paused)v.play().catch(()=>{});else v.pause();
+ if(video.paused)video.play().catch(()=>{});
+ else video.pause();
 }
+
 function stopVideo(){
- let v=document.getElementById("video");v.pause();v.removeAttribute("src");v.load();
+ video.pause();
+ video.removeAttribute("src");
+ video.load();
  document.getElementById("playerBox").style.display="none";
 }
-function showLast(){
- let name=localStorage.getItem("nm_last");
- let i=data.findIndex(x=>x.title===name);
- if(i>=0)openDetail(i);else alert("No recently played title.");
+
+function goBack(){
+ stopVideo();
+ detail.style.display="none";
+ grid.style.display="grid";
+ document.getElementById("search").style.display="block";
 }
+
+function getList(key){
+ try{return JSON.parse(localStorage.getItem(key)||"[]")}
+ catch(e){return []}
+}
+
+function toggleWatchlist(){
+ if(!current)return;
+ let list=getList("rc_watchlist");
+ const i=list.findIndex(x=>x.identifier===current.identifier);
+
+ if(i>=0)list.splice(i,1);
+ else list.push(current);
+
+ localStorage.setItem("rc_watchlist",JSON.stringify(list));
+ alert(i>=0?"Removed from My List":"Added to My List");
+}
+
+function saveRecent(m){
+ let list=getList("rc_recent");
+ list=list.filter(x=>x.identifier!==m.identifier);
+ list.unshift(m);
+ localStorage.setItem("rc_recent",JSON.stringify(list.slice(0,20)));
+}
+
+function showWatchlist(btn){
+ stopVideo();
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ if(btn)btn.classList.add("active");
+
+ detail.style.display="none";
+ grid.style.display="grid";
+ document.getElementById("search").style.display="none";
+
+ const list=getList("rc_watchlist");
+ hideLoading();
+ grid.innerHTML="";
+
+ if(!list.length){
+  showLoading("Your watchlist is empty.");
+  return;
+ }
+ renderMovies(list);
+}
+
+function showRecent(){
+ stopVideo();
+ detail.style.display="none";
+ grid.style.display="grid";
+ document.getElementById("search").style.display="none";
+
+ const list=getList("rc_recent");
+ hideLoading();
+ grid.innerHTML="";
+
+ if(!list.length){
+  showLoading("No recently watched movies.");
+  return;
+ }
+ renderMovies(list);
+}
+
+function loadTrending(btn){
+ if(btn){
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+ }
+ lastPage="home";
+ document.getElementById("search").value="";
+ searchArchive("mediatype:movies AND collection:feature_films");
+}
+
 document.addEventListener("keydown",e=>{
  if(e.key==="Escape"||e.key==="Backspace"){
-  if(document.getElementById("detail").style.display==="block"){stopVideo();showHome();}
+  if(detail.style.display==="block")goBack();
  }
 });
-render();
-</script></body>
-</html>
+
+loadTrending();
+</script>
+
+</body>
+ </html>
