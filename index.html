@@ -1,16 +1,787 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>NETMIRROR CLOUD</title>
+
+<style>
+*{
+ box-sizing:border-box;
+}
+body{
+ margin:0;
+ background:#080808;
+ color:#fff;
+ font-family:Arial,sans-serif;
+ font-size:11px;
+ overflow-x:hidden;
+}
+header{
+ height:29px;
+ background:#151515;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 6px;
+ border-bottom:1px solid #333;
+ position:sticky;
+ top:0;
+ z-index:10;
+}
+.logo{
+ font-size:13px;
+ font-weight:bold;
+ color:#e50914;
+}
+#status{
+ color:#aaa;
+ font-size:9px;
+}
+nav{
+ display:flex;
+ overflow-x:auto;
+ background:#111;
+ border-bottom:1px solid #333;
+ scrollbar-width:none;
+}
+nav button{
+ flex-shrink:0;
+ border:0;
+ background:transparent;
+ color:#aaa;
+ padding:8px 9px;
+ font-size:10px;
+}
+nav button.active{
+ color:#fff;
+ border-bottom:2px solid #e50914;
+}
+main{
+ padding:6px;
+ padding-bottom:35px;
+}
+.page{
+ display:none;
+}
+.page.active{
+ display:block;
+}
+h3{
+ font-size:12px;
+ margin:8px 0;
+}
+.banner{
+ background:linear-gradient(120deg,#421018,#101010);
+ height:85px;
+ padding:12px;
+ border-radius:5px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ margin-bottom:10px;
+}
+.banner b{
+ font-size:17px;
+}
+.banner span{
+ color:#ccc;
+ margin-top:5px;
+}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:6px;
+}
+.card{
+ background:#191919;
+ border:1px solid #303030;
+ border-radius:4px;
+ overflow:hidden;
+ min-width:0;
+}
+.poster{
+ height:65px;
+ background:linear-gradient(140deg,#333,#111);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:19px;
+ color:#ddd;
+}
+.cardinfo{
+ padding:5px;
+}
+.cardinfo b{
+ display:block;
+ font-size:10px;
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+}
+.cardinfo small{
+ color:#aaa;
+ font-size:8px;
+}
+.card button{
+ width:100%;
+ background:#292929;
+ color:white;
+ border:0;
+ padding:5px;
+ font-size:9px;
+}
+.btn{
+ background:#e50914;
+ color:white;
+ border:0;
+ border-radius:3px;
+ padding:7px;
+ font-size:10px;
+}
+input{
+ width:100%;
+ background:#191919;
+ border:1px solid #444;
+ color:#fff;
+ padding:8px;
+ font-size:11px;
+ margin:5px 0;
+ outline:none;
+}
+.item{
+ padding:8px;
+ background:#191919;
+ border-bottom:1px solid #333;
+ margin-bottom:4px;
+}
+.item:focus,.selected{
+ outline:2px solid #e50914;
+}
+#playerBox{
+ display:none;
+ background:#000;
+ margin-bottom:10px;
+}
+video{
+ width:100%;
+ height:120px;
+ background:#000;
+}
+#playerTitle{
+ padding:6px;
+ color:#fff;
+}
+.row{
+ display:flex;
+ gap:5px;
+ margin:6px 0;
+}
+.row button{
+ flex:1;
+}
+.muted{
+ color:#999;
+}
+footer{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ background:#151515;
+ border-top:1px solid #333;
+ padding:6px;
+ text-align:center;
+ color:#aaa;
+ font-size:9px;
+ z-index:20;
+}
+#message{
+ color:#ffcc55;
+ min-height:13px;
+ margin:5px 0;
+}
+</style>
 </head>
+
 <body>
-<h3>Storage Permission Test</h3>
 
-<input type="file" id="f">
+<header>
+ <div class="logo">NETMIRROR</div>
+ <div id="status">CLOUD APP</div>
+</header>
 
-<button onclick="document.getElementById('f').click()">
-OPEN PHONE STORAGE
-</button>
+<nav id="navigation">
+ <button class="active" data-page="home">HOME</button>
+ <button data-page="netflix">NETFLIX</button>
+ <button data-page="prime">PRIME</button>
+ <button data-page="hotstar">HOTSTAR</button>
+ <button data-page="movies">MOVIES</button>
+ <button data-page="series">SERIES</button>
+ <button data-page="search">SEARCH</button>
+ <button data-page="watchlist">MY LIST</button>
+ <button data-page="history">HISTORY</button>
+ <button data-page="settings">SETTINGS</button>
+</nav>
 
+<main>
+
+<div id="message"></div>
+
+<div id="playerBox">
+ <div id="playerTitle">NOW PLAYING</div>
+ <video id="video" controls playsinline preload="none"></video>
+ <div class="row">
+  <button class="btn" onclick="stopVideo()">STOP</button>
+  <button class="btn" onclick="closePlayer()">CLOSE</button>
+ </div>
+</div>
+
+<!-- HOME -->
+<section class="page active" id="home">
+ <div class="banner">
+  <b>NETMIRROR CLOUD</b>
+  <span>Your entertainment space</span>
+ </div>
+
+ <h3>Streaming Platforms</h3>
+ <div class="grid">
+  <div class="card">
+   <div class="poster" style="color:#e50914">N</div>
+   <div class="cardinfo"><b>Netflix</b><small>Movies & Shows</small></div>
+   <button onclick="go('netflix')">OPEN</button>
+  </div>
+  <div class="card">
+   <div class="poster" style="color:#40aaff">P</div>
+   <div class="cardinfo"><b>Prime Video</b><small>Movies & Shows</small></div>
+   <button onclick="go('prime')">OPEN</button>
+  </div>
+  <div class="card">
+   <div class="poster" style="color:#55aaff">D+</div>
+   <div class="cardinfo"><b>Hotstar</b><small>Movies & Shows</small></div>
+   <button onclick="go('hotstar')">OPEN</button>
+  </div>
+ </div>
+
+ <h3>Recently Added</h3>
+ <div id="homeList" class="grid"></div>
+</section>
+
+<!-- PLATFORM PAGES -->
+<section class="page" id="netflix">
+ <h3 style="color:#e50914">NETFLIX</h3>
+ <p class="muted">Netflix collection</p>
+ <div id="netflixList" class="grid"></div>
+</section>
+
+<section class="page" id="prime">
+ <h3 style="color:#40aaff">PRIME VIDEO</h3>
+ <p class="muted">Prime collection</p>
+ <div id="primeList" class="grid"></div>
+</section>
+
+<section class="page" id="hotstar">
+ <h3 style="color:#55aaff">DISNEY+ HOTSTAR</h3>
+ <p class="muted">Hotstar collection</p>
+ <div id="hotstarList" class="grid"></div>
+</section>
+
+<!-- MOVIES -->
+<section class="page" id="movies">
+ <h3>ALL MOVIES</h3>
+ <div id="movieList" class="grid"></div>
+</section>
+
+<!-- SERIES -->
+<section class="page" id="series">
+ <h3>WEB SERIES</h3>
+ <div id="seriesList" class="grid"></div>
+</section>
+
+<!-- SEARCH -->
+<section class="page" id="search">
+ <h3>SEARCH CONTENT</h3>
+ <input id="searchInput" placeholder="Enter movie or series name">
+ <button class="btn" onclick="searchContent()">SEARCH</button>
+ <div id="searchResults"></div>
+</section>
+
+<!-- WATCHLIST -->
+<section class="page" id="watchlist">
+ <h3>MY WATCHLIST</h3>
+ <div id="watchList"></div>
+</section>
+
+<!-- HISTORY -->
+<section class="page" id="history">
+ <h3>WATCH HISTORY</h3>
+ <button class="btn" onclick="clearHistory()">CLEAR HISTORY</button>
+ <div id="historyList"></div>
+</section>
+
+<!-- SETTINGS -->
+<section class="page" id="settings">
+ <h3>SETTINGS</h3>
+ <div class="item">Application: NETMIRROR CLOUD</div>
+ <div class="item">Screen: Compact Mode</div>
+ <div class="item">Storage: Local Browser Storage</div>
+ <div class="item">Player: HTML5 Video</div>
+ <div class="item">Version: 1.0</div>
+ <div class="item">
+  <button class="btn" onclick="resetApp()">RESET APP DATA</button>
+ </div>
+ <p class="muted">Use authorized video URLs only.</p>
+</section>
+
+<!-- DETAILS -->
+<section class="page" id="details">
+ <h3 id="detailTitle">CONTENT DETAILS</h3>
+ <div class="banner">
+  <b id="detailName">Movie Name</b>
+  <span id="detailInfo">Movie Information</span>
+ </div>
+ <p id="detailDescription" class="muted"></p>
+ <div class="row">
+  <button class="btn" onclick="playSelected()">PLAY</button>
+  <button class="btn" onclick="toggleFavourite()">MY LIST</button>
+ </div>
+ <div class="row">
+  <button class="btn" onclick="goBack()">BACK</button>
+ </div>
+</section>
+
+</main>
+
+<footer>
+ ↑↓ SELECT | ←→ MENU | OK OPEN | 5 FAV | 0 SEARCH
+</footer>
+
+<script>
+/* =====================================
+   NETMIRROR CLOUD - MASTER JAVASCRIPT
+   ===================================== */
+
+/*
+  Add your own authorized content here.
+
+  Example:
+  {
+    id:1,
+    name:"Demo Movie",
+    type:"movie",
+    platform:"netflix",
+    category:"Action",
+    year:"2026",
+    description:"Demo description",
+    url:"https://example.com/video.mp4"
+  }
+
+  Use a direct video URL supported by the browser.
+*/
+
+var CONTENT = [
+ {
+  id:1,
+  name:"Demo Movie 1",
+  type:"movie",
+  platform:"netflix",
+  category:"Action",
+  year:"2026",
+  description:"Add your movie description here.",
+  url:""
+ },
+ {
+  id:2,
+  name:"Demo Series 1",
+  type:"series",
+  platform:"prime",
+  category:"Drama",
+  year:"2026",
+  description:"Add your series description here.",
+  url:""
+ },
+ {
+  id:3,
+  name:"Demo Movie 2",
+  type:"movie",
+  platform:"hotstar",
+  category:"Adventure",
+  year:"2026",
+  description:"Add your movie description here.",
+  url:""
+ }
+];
+
+var currentPage="home";
+var previousPage="home";
+var selectedContent=null;
+
+var favourites=loadData("nm_favourites",[]);
+var history=loadData("nm_history",[]);
+
+function loadData(key,defaultValue){
+ try{
+  var value=localStorage.getItem(key);
+  return value?JSON.parse(value):defaultValue;
+ }catch(e){
+  return defaultValue;
+ }
+}
+
+function saveData(){
+ try{
+  localStorage.setItem("nm_favourites",JSON.stringify(favourites));
+  localStorage.setItem("nm_history",JSON.stringify(history));
+ }catch(e){}
+}
+
+function message(text){
+ document.getElementById("message").textContent=text;
+}
+
+function go(page){
+ var pages=document.querySelectorAll(".page");
+ pages.forEach(function(p){
+  p.classList.remove("active");
+ });
+
+ var target=document.getElementById(page);
+ if(!target)return;
+
+ target.classList.add("active");
+
+ document.querySelectorAll("nav button").forEach(function(b){
+  b.classList.toggle("active",b.dataset.page===page);
+ });
+
+ if(page!=="details")previousPage=page;
+
+ currentPage=page;
+ renderAll();
+ window.scrollTo(0,0);
+}
+
+function goBack(){
+ go(previousPage);
+}
+
+function cardHTML(item){
+ return '<div class="card">'+
+ '<div class="poster">'+escapeHTML(item.name.substring(0,2).toUpperCase())+'</div>'+
+ '<div class="cardinfo"><b>'+escapeHTML(item.name)+'</b>'+
+ '<small>'+escapeHTML(item.platform)+' • '+escapeHTML(item.type)+'</small></div>'+
+ '<button onclick="showDetails('+item.id+')">DETAILS</button>'+
+ '</div>';
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,function(c){
+  return {
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#39;"
+  }[c];
+ });
+}
+
+function renderGrid(id,items){
+ var box=document.getElementById(id);
+ if(!box)return;
+
+ if(!items.length){
+  box.innerHTML='<p class="muted">No content available.</p>';
+  return;
+ }
+
+ box.innerHTML=items.map(cardHTML).join("");
+}
+
+function renderAll(){
+ renderGrid("homeList",CONTENT.slice(0,6));
+ renderGrid("netflixList",CONTENT.filter(x=>x.platform==="netflix"));
+ renderGrid("primeList",CONTENT.filter(x=>x.platform==="prime"));
+ renderGrid("hotstarList",CONTENT.filter(x=>x.platform==="hotstar"));
+ renderGrid("movieList",CONTENT.filter(x=>x.type==="movie"));
+ renderGrid("seriesList",CONTENT.filter(x=>x.type==="series"));
+
+ renderFavourites();
+ renderHistory();
+}
+
+function showDetails(id){
+ var item=CONTENT.find(x=>x.id===id);
+ if(!item)return;
+
+ selectedContent=item;
+
+ previousPage=currentPage;
+
+ document.getElementById("detailTitle").textContent="CONTENT DETAILS";
+ document.getElementById("detailName").textContent=item.name;
+ document.getElementById("detailInfo").textContent=
+ item.platform+" | "+item.type+" | "+item.year;
+ document.getElementById("detailDescription").textContent=item.description||"";
+
+ go("details");
+}
+
+function playSelected(){
+ if(!selectedContent)return;
+
+ var item=selectedContent;
+
+ if(!item.url){
+  message("Video URL not added.");
+  return;
+ }
+
+ var video=document.getElementById("video");
+ var box=document.getElementById("playerBox");
+
+ box.style.display="block";
+ document.getElementById("playerTitle").textContent=item.name;
+
+ if(video.src!==item.url){
+  video.src=item.url;
+ }
+
+ var result=video.play();
+
+ if(result && result.catch){
+  result.catch(function(){
+   message("Video unavailable or unsupported.");
+  });
+ }
+
+ history=history.filter(x=>x.id!==item.id);
+ history.unshift(item);
+ history=history.slice(0,30);
+
+ saveData();
+ renderHistory();
+ message("Playing: "+item.name);
+}
+
+function stopVideo(){
+ var video=document.getElementById("video");
+ video.pause();
+ video.removeAttribute("src");
+ video.load();
+ message("Playback stopped.");
+}
+
+function closePlayer(){
+ stopVideo();
+ document.getElementById("playerBox").style.display="none";
+}
+
+function toggleFavourite(){
+ if(!selectedContent)return;
+
+ var id=selectedContent.id;
+ var exists=favourites.some(x=>x.id===id);
+
+ if(exists){
+  favourites=favourites.filter(x=>x.id!==id);
+  message("Removed from My List");
+ }else{
+  favourites.unshift(selectedContent);
+  message("Added to My List");
+ }
+
+ saveData();
+ renderFavourites();
+}
+
+function renderFavourites(){
+ var box=document.getElementById("watchList");
+ if(!box)return;
+
+ if(!favourites.length){
+  box.innerHTML='<p class="muted">Your list is empty.</p>';
+  return;
+ }
+
+ box.innerHTML=favourites.map(function(x){
+  return '<div class="item">'+
+  escapeHTML(x.name)+
+  ' <button class="btn" onclick="showDetails('+x.id+')">OPEN</button>'+
+  '</div>';
+ }).join("");
+}
+
+function renderHistory(){
+ var box=document.getElementById("historyList");
+ if(!box)return;
+
+ if(!history.length){
+  box.innerHTML='<p class="muted">No watch history.</p>';
+  return;
+ }
+
+ box.innerHTML=history.map(function(x){
+  return '<div class="item">'+
+  escapeHTML(x.name)+
+  ' <button class="btn" onclick="showDetails('+x.id+')">OPEN</button>'+
+  '</div>';
+ }).join("");
+}
+
+function clearHistory(){
+ history=[];
+ saveData();
+ renderHistory();
+ message("History cleared.");
+}
+
+function searchContent(){
+ var q=document.getElementById("searchInput").value.toLowerCase().trim();
+ var results=CONTENT.filter(function(x){
+  return x.name.toLowerCase().indexOf(q)!==-1;
+ });
+
+ var box=document.getElementById("searchResults");
+
+ if(!results.length){
+  box.innerHTML='<p class="muted">No results found.</p>';
+  return;
+ }
+
+ box.innerHTML=results.map(function(x){
+  return '<div class="item">'+
+  escapeHTML(x.name)+
+  ' <button class="btn" onclick="showDetails('+x.id+')">OPEN</button>'+
+  '</div>';
+ }).join("");
+}
+
+function resetApp(){
+ if(!confirm("Reset all saved data?"))return;
+
+ favourites=[];
+ history=[];
+ saveData();
+ renderAll();
+ message("App data reset.");
+}
+
+/* NAVIGATION */
+
+document.querySelectorAll("nav button").forEach(function(btn){
+ btn.addEventListener("click",function(){
+  go(btn.dataset.page);
+ });
+});
+
+/* KEYPAD SUPPORT */
+
+var navIndex=0;
+var navButtons=document.querySelectorAll("nav button");
+
+function keypadNav(direction){
+ var active=document.querySelector(".page.active");
+ if(!active)return;
+
+ var elements=active.querySelectorAll(
+  "button,input,.card"
+ );
+
+ var visible=Array.from(elements).filter(function(el){
+  return el.offsetParent!==null;
+ });
+
+ if(!visible.length)return;
+
+ navIndex+=direction;
+
+ if(navIndex<0)navIndex=visible.length-1;
+ if(navIndex>=visible.length)navIndex=0;
+
+ visible.forEach(x=>x.classList.remove("selected"));
+
+ var selected=visible[navIndex];
+ selected.classList.add("selected");
+ selected.focus();
+ selected.scrollIntoView({block:"nearest"});
+}
+
+document.addEventListener("keydown",function(e){
+
+ var key=e.key;
+
+ if(key==="ArrowUp" || key==="8"){
+  e.preventDefault();
+  keypadNav(-1);
+ }
+
+ if(key==="ArrowDown" || key==="2"){
+  e.preventDefault();
+  keypadNav(1);
+ }
+
+ if(key==="ArrowRight" || key==="6"){
+  e.preventDefault();
+  navIndex=0;
+  goNextPage(1);
+ }
+
+ if(key==="ArrowLeft" || key==="4"){
+  e.preventDefault();
+  navIndex=0;
+  goNextPage(-1);
+ }
+
+ if(key==="Enter"){
+  var active=document.activeElement;
+  if(active && active.click)active.click();
+ }
+
+ if(key==="0"){
+  go("search");
+  setTimeout(function(){
+   document.getElementById("searchInput").focus();
+  },100);
+ }
+
+ if(key==="5"){
+  if(currentPage==="details")toggleFavourite();
+ }
+
+ if(key==="Escape" || key==="Backspace"){
+  e.preventDefault();
+
+  if(currentPage==="details"){
+   goBack();
+  }else{
+   closePlayer();
+  }
+ }
+
+});
+
+function goNextPage(direction){
+ var current=-1;
+
+ navButtons.forEach(function(b,i){
+  if(b.dataset.page===currentPage)current=i;
+ });
+
+ current+=direction;
+
+ if(current<0)current=navButtons.length-1;
+ if(current>=navButtons.length)current=0;
+
+ go(navButtons[current].dataset.page);
+}
+
+/* START */
+
+renderAll();
+
+message("NETMIRROR CLOUD READY");
+
+</script>
 </body>
 </html>
