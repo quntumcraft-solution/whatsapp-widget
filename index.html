@@ -1,443 +1,470 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RUTIK CINEMA</title><style>
 *{box-sizing:border-box}
 body{
- margin:0;background:#080808;color:#fff;
- font-family:Arial,sans-serif;font-size:12px
+ margin:0;
+ background:#101014;
+ color:white;
+ font-family:Arial,sans-serif;
+ font-size:13px;
 }
 header{
- background:#151515;padding:9px 7px;
- border-bottom:2px solid #e50914
+ background:#19191f;
+ padding:10px 7px;
+ text-align:center;
+ border-bottom:2px solid #e50914;
 }
-.logo{font-size:19px;font-weight:bold;color:#e50914}
-.sub{font-size:9px;color:#aaa;margin-top:3px}
+.logo{
+ font-size:19px;
+ font-weight:bold;
+ color:#e50914;
+}
+.sub{font-size:10px;color:#aaa;margin-top:3px}
 nav{
- display:flex;gap:4px;padding:6px;
- background:#111;overflow-x:auto
+ display:flex;
+ overflow-x:auto;
+ background:#202027;
+ padding:5px 2px;
 }
-button{
- border:0;border-radius:4px;background:#292929;
- color:white;padding:8px 9px;font-size:11px;
- white-space:nowrap
+nav button{
+ flex-shrink:0;
+ background:#303039;
+ color:white;
+ border:0;
+ padding:8px;
+ margin:2px;
+ font-size:11px;
 }
-button:focus,.movie:focus,input:focus{
- outline:2px solid #e50914;background:#401015
-}
-.active{background:#e50914}
-main{padding:6px}
+nav button.active{background:#e50914}
 input{
- width:100%;padding:9px;background:#171717;
- border:1px solid #444;color:white;
- border-radius:4px;margin-bottom:6px;font-size:12px
+ width:100%;
+ padding:10px;
+ background:#24242c;
+ border:1px solid #555;
+ color:white;
+ outline:none;
 }
-#grid{display:block}
+button{cursor:pointer}
+#searchBox{padding:7px}
+#status{
+ color:#aaa;
+ padding:7px;
+ font-size:11px;
+}
+#movieList{padding:5px}
 .movie{
- display:flex;gap:8px;padding:6px;
- background:#151515;border-bottom:1px solid #333;
- min-height:76px;align-items:center
+ display:flex;
+ gap:8px;
+ padding:7px 3px;
+ border-bottom:1px solid #303039;
+ min-height:83px;
 }
 .poster{
- width:48px;height:64px;flex-shrink:0;
- background:#252525;border-radius:3px;
- display:flex;align-items:center;justify-content:center;
- overflow:hidden;text-align:center;color:#aaa;
- font-size:9px
+ width:53px;
+ height:70px;
+ object-fit:cover;
+ background:#292930;
+ flex-shrink:0;
 }
-.poster img{width:100%;height:100%;object-fit:cover}
-.details{min-width:0;flex:1}
-.name{
- font-size:13px;font-weight:bold;
- line-height:17px;overflow-wrap:anywhere
+.info{flex:1;min-width:0}
+.title{
+ font-size:13px;
+ font-weight:bold;
+ margin:2px 0 5px;
 }
-.meta{font-size:10px;color:#aaa;margin-top:5px;line-height:14px}
-.tag{font-size:9px;color:#e50914;margin-top:4px}
-#loading{padding:12px;text-align:center;color:#bbb}
-#pageInfo{text-align:center;color:#aaa;padding:7px;font-size:10px}
+.meta{font-size:10px;color:#aaa;margin-bottom:5px}
+.smallbtn{
+ background:#e50914;
+ color:white;
+ border:0;
+ padding:6px 8px;
+ font-size:11px;
+ margin:2px 2px 2px 0;
+}
+.graybtn{background:#383840}
+#pages{
+ text-align:center;
+ padding:10px;
+}
+#pages button{
+ background:#303039;
+ color:white;
+ border:0;
+ padding:8px 12px;
+ margin:3px;
+}
 #detail{
- display:none;background:#151515;padding:8px;
- border-radius:5px
+ display:none;
+ padding:10px;
 }
-#detail h2{font-size:16px;line-height:20px}
-#desc{color:#ccc;line-height:17px}
-#playerBox{display:none;background:#000;margin-top:8px}
-video{width:100%;max-height:190px;background:#000}
-.row{display:flex;gap:5px;margin:7px 0;flex-wrap:wrap}
-.row button{flex:1}
-.small{font-size:10px;color:#aaa;line-height:16px}
-#status{font-size:10px;color:#ffb4b4;margin:7px 0;line-height:15px}
-footer{text-align:center;color:#666;padding:12px;font-size:9px}
+#detail img{
+ width:85px;
+ height:115px;
+ object-fit:cover;
+ float:left;
+ margin:0 10px 8px 0;
+}
+#detailTitle{font-size:16px;font-weight:bold}
+#detailText{font-size:11px;color:#ccc;line-height:1.5}
+#player{
+ display:none;
+ padding:7px;
+ background:#000;
+}
+#video{
+ width:100%;
+ max-height:230px;
+ background:black;
+}
+.playerTitle{
+ font-size:12px;
+ padding:7px 0;
+ color:#ddd;
+}
+.playerControls{
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:5px;
+ margin:6px 0;
+}
+.playerControls button{
+ background:#303039;
+ color:white;
+ border:1px solid #555;
+ padding:9px 11px;
+ font-size:12px;
+}
+#timeInfo{
+ text-align:center;
+ color:#ccc;
+ font-size:11px;
+ padding:5px;
+}
+#seekbar{
+ width:100%;
+ margin:5px 0;
+}
+#watchlist{display:none;padding:8px}
+footer{
+ text-align:center;
+ color:#777;
+ font-size:10px;
+ padding:15px 5px;
+}
 </style></head><body><header>
  <div class="logo">RUTIK CINEMA</div>
- <div class="sub">MOVIES • HINDI • ENTERTAINMENT</div>
+ <div class="sub">MOVIES • SERIES • ENTERTAINMENT</div>
 </header><nav>
- <button class="active" onclick="category('hindi',this)">HINDI</button>
- <button onclick="category('indian',this)">INDIAN</button>
- <button onclick="category('dubbed',this)">HINDI DUBBED</button>
- <button onclick="showWatchlist(this)">MY LIST</button>
-</nav><main><input id="search" placeholder="Search movie name..." 
-onkeydown="if(event.key==='Enter')searchMovies()">
-
-<div class="row">
- <button onclick="searchMovies()">SEARCH</button>
- <button onclick="showRecent()">RECENT</button>
-</div><div id="loading">Loading Hindi Movies...</div>
-<div id="grid"></div>
-<div id="pageInfo"></div><div class="row" id="pagination">
+ <button class="active" onclick="setCategory('hindi',this)">HINDI</button>
+ <button onclick="setCategory('indian',this)">INDIAN</button>
+ <button onclick="setCategory('dubbed',this)">DUBBED</button>
+ <button onclick="showMyList(this)">MY LIST</button>
+ <button onclick="setCategory('all',this)">ALL</button>
+</nav><div id="searchBox">
+ <input id="searchInput" type="search"
+ placeholder="Search movies..."
+ onkeydown="if(event.key==='Enter')searchMovies()">
+ <button class="smallbtn" onclick="searchMovies()">SEARCH</button>
+</div><div id="status">Loading movies...</div><div id="movieList"></div><div id="pages">
  <button onclick="changePage(-1)">PREVIOUS</button>
+ <span id="pageNumber">1</span>
  <button onclick="changePage(1)">NEXT</button>
-</div><section id="detail">
- <button onclick="goBack()">← BACK</button> <h2 id="dtitle"></h2>
- <div class="small" id="dmeta"></div>
- <p id="desc"></p>
- <div class="small" id="rights"></div> <div class="row">
-  <button onclick="playMovie()">▶ PLAY</button>
-  <button onclick="toggleWatchlist()">+ MY LIST</button>
- </div> <div id="status"></div> <div id="playerBox">
-  <video id="video" controls playsinline preload="none"></video>
-  <div class="row">
-   <button onclick="togglePlay()">PLAY / PAUSE</button>
-   <button onclick="stopVideo()">STOP</button>
-  </div>
- </div> <div class="small" id="fileInfo"></div>
-</section></main><footer>RUTIK CINEMA V2 • CLOUD PHONE</footer><script>
-const API="https://archive.org";
+</div><div id="detail">
+ <button class="smallbtn graybtn" onclick="closeDetail()">BACK</button>
+ <br><br>
+ <img id="detailPoster" src="" alt="">
+ <div id="detailTitle"></div>
+ <div id="detailText"></div>
+ <div style="clear:both"></div>
+ <button class="smallbtn" onclick="playSelected()">PLAY</button>
+ <button class="smallbtn graybtn" onclick="addWatchlist()">ADD TO MY LIST</button>
+</div><div id="watchlist">
+ <h3>MY LIST</h3>
+ <div id="myListItems"></div>
+ <button class="smallbtn graybtn" onclick="closeMyList()">BACK</button>
+</div><div id="player">
+ <div class="playerTitle" id="playingTitle">RUTIK CINEMA PLAYER</div><video id="video" controls playsinline preload="metadata"></video>
 
-let currentCategory="hindi";
-let currentPage=0;
-let current=null;
+ <div id="timeInfo">00:00 / 00:00</div>
+ <input type="range" id="seekbar" min="0" max="1000" value="0"> <div class="playerControls">
+  <button onclick="seekVideo(-10)">⏪ 10 SEC</button>
+  <button onclick="togglePlay()">▶ / ❚❚</button>
+  <button onclick="seekVideo(10)">10 SEC ⏩</button>
+ </div> <div class="playerControls">
+  <button onclick="restartVideo()">RESTART</button>
+  <button onclick="stopVideo()">STOP</button>
+  <button onclick="closePlayer()">BACK</button>
+ </div> <div id="playerStatus" style="color:#aaa;text-align:center;font-size:10px;padding:5px">
+  Arrow keys: Forward / Backward | OK: Play/Pause
+ </div>
+</div><footer>
+ RUTIK CINEMA • Publicly accessible catalogue
+</footer><script>
+const API="https://archive.org/advancedsearch.php";
+const META="https://archive.org/metadata/";
+const IMG="https://archive.org/services/img/";
+
+let category="hindi";
+let currentPage=1;
+let pageSize=8;
+let currentItems=[];
+let selectedMovie=null;
 let currentFile=null;
-let results=[];
 let lastQuery="";
-let controller=null;
-let requestNumber=0;
+let searchMode=false;
+let requestController=null;
 
-const grid=document.getElementById("grid");
-const loading=document.getElementById("loading");
-const detail=document.getElementById("detail");
 const video=document.getElementById("video");
 
-const CACHE_TIME=30*60*1000;
-
-function cacheGet(key){
- try{
-  const x=JSON.parse(sessionStorage.getItem(key)||"null");
-  if(x && Date.now()-x.time<CACHE_TIME)return x.data;
- }catch(e){}
- return null;
-}
-
-function cacheSet(key,data){
- try{
-  sessionStorage.setItem(key,JSON.stringify({
-   time:Date.now(),data:data
-  }));
- }catch(e){}
-}
-
-function status(text){
- document.getElementById("status").textContent=text;
-}
-
-function showLoading(text){
- loading.style.display="block";
- loading.textContent=text;
-}
-
-function hideLoading(){
- loading.style.display="none";
+function setStatus(t){
+ document.getElementById("status").textContent=t;
 }
 
 function makeQuery(){
- if(currentCategory==="hindi")
+ if(category==="hindi")
   return 'mediatype:movies AND language:hin';
-
- if(currentCategory==="indian")
-  return 'mediatype:movies AND language:hin AND (subject:India OR subject:Indian)';
-
- if(currentCategory==="dubbed")
-  return 'mediatype:movies AND (title:"Hindi dubbed" OR description:"Hindi dubbed" OR title:"Hindi dub")';
-
- return 'mediatype:movies AND language:hin';
+ if(category==="indian")
+  return 'mediatype:movies AND (subject:India OR subject:Indian)';
+ if(category==="dubbed")
+  return 'mediatype:movies AND ("Hindi dubbed" OR "Hindi Dubbed")';
+ return 'mediatype:movies';
 }
 
-function category(type,btn){
- currentCategory=type;
- currentPage=0;
-
+function setCategory(c,btn){
+ category=c;
+ currentPage=1;
+ searchMode=false;
+ document.getElementById("searchInput").value="";
  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
  if(btn)btn.classList.add("active");
-
- document.getElementById("search").value="";
- document.getElementById("search").style.display="block";
-
- stopVideo();
- detail.style.display="none";
-
+ document.getElementById("detail").style.display="none";
+ document.getElementById("watchlist").style.display="none";
+ document.getElementById("movieList").style.display="block";
+ document.getElementById("pages").style.display="block";
  loadMovies();
 }
 
-function searchMovies(){
- const q=document.getElementById("search").value.trim();
- if(!q)return;
-
- currentPage=0;
- const safe=q.replace(/[+\-&|!(){}[\]^"~*?:\\/]/g," ").trim();
-
- let query='mediatype:movies AND language:hin AND title:('+safe+')';
-
- if(currentCategory==="dubbed")
-  query='mediatype:movies AND (title:('+safe+') OR description:('+safe+'))';
-
- lastQuery=query;
- loadMovies(query);
+async function loadMovies(){
+ const q=searchMode?lastQuery:makeQuery();
+ lastQuery=q;
+ await fetchMovies(q);
 }
 
-async function loadMovies(customQuery){
- const query=customQuery||makeQuery();
+async function searchMovies(){
+ const value=document.getElementById("searchInput").value.trim();
+ if(!value)return;
+ searchMode=true;
+ currentPage=1;
+ lastQuery='mediatype:movies AND title:('+value+')';
+ document.getElementById("detail").style.display="none";
+ document.getElementById("watchlist").style.display="none";
+ document.getElementById("movieList").style.display="block";
+ document.getElementById("pages").style.display="block";
+ await fetchMovies(lastQuery);
+}
 
- lastQuery=query;
- const thisRequest=++requestNumber;
+async function fetchMovies(q){
+ if(requestController)requestController.abort();
+ requestController=new AbortController();
 
- if(controller)controller.abort();
- controller=new AbortController();
+ setStatus("Searching...");
+ document.getElementById("movieList").innerHTML="";
 
- stopVideo();
- detail.style.display="none";
- grid.style.display="block";
- grid.innerHTML="";
+ const start=(currentPage-1)*pageSize;
+ const url=API+"?q="+encodeURIComponent(q)+
+ "&fl[]=identifier&fl[]=title&fl[]=year&fl[]=description&fl[]=creator"+
+ "&rows="+pageSize+"&start="+start+"&output=json";
 
- showLoading("Loading movies...");
- document.getElementById("pageInfo").textContent="";
+ try{
+  const r=await fetch(url,{signal:requestController.signal});
+  const data=await r.json();
+  currentItems=data.response.docs||[];
 
- const cacheKey="rc2_"+query+"_"+currentPage;
- const cached=cacheGet(cacheKey);
+  renderMovies(currentItems);
+  document.getElementById("pageNumber").textContent=currentPage;
+  setStatus("Results: "+data.response.numFound);
+ }catch(e){
+  if(e.name!=="AbortError")setStatus("Network error. Try again.");
+ }
+}
 
- if(cached){
-  results=cached;
-  hideLoading();
-  renderMovies();
+function renderMovies(items){
+ const box=document.getElementById("movieList");
+ box.innerHTML="";
+
+ if(!items.length){
+  box.innerHTML="<p>No movies found.</p>";
   return;
  }
 
- try{
-  const fields=[
-   "identifier","title","year","description",
-   "creator","language","licenseurl","subject"
-  ];
+ items.forEach(movie=>{
+  const row=document.createElement("div");
+  row.className="movie";
 
-  const params=new URLSearchParams();
-  params.set("q",query);
-  fields.forEach(f=>params.append("fl[]",f));
-  params.set("rows","8");
-  params.set("page",String(currentPage+1));
-  params.set("output","json");
-
-  const url=API+"/advancedsearch.php?"+params.toString();
-
-  const response=await fetch(url,{
-   signal:controller.signal
-  });
-
-  if(!response.ok)throw Error("Search error");
-
-  const data=await response.json();
-
-  if(thisRequest!==requestNumber)return;
-
-  results=data.response.docs||[];
-
-  cacheSet(cacheKey,results);
-
-  hideLoading();
-
-  if(!results.length){
-   showLoading("No movies found. Try another search.");
-   return;
-  }
-
-  renderMovies();
-
- }catch(e){
-  if(e.name==="AbortError")return;
-  if(thisRequest!==requestNumber)return;
-  showLoading("Internet error. Please try again.");
- }
-}
-
-function renderMovies(){
- grid.innerHTML="";
-
- results.forEach((m,index)=>{
-  const card=document.createElement("div");
-  card.className="movie";
-  card.tabIndex=0;
-
-  const poster=document.createElement("div");
+  const poster=document.createElement("img");
   poster.className="poster";
-  poster.textContent="POSTER";
+  poster.loading="lazy";
+  poster.src=IMG+encodeURIComponent(movie.identifier);
+  poster.onerror=function(){this.style.display="none"};
 
   const info=document.createElement("div");
-  info.className="details";
+  info.className="info";
 
-  const name=document.createElement("div");
-  name.className="name";
-  name.textContent=m.title||m.identifier;
+  const title=document.createElement("div");
+  title.className="title";
+  title.textContent=movie.title||movie.identifier;
 
   const meta=document.createElement("div");
   meta.className="meta";
-  meta.textContent=(m.year||"Year unknown")+" • "+(m.language||"Hindi");
+  meta.textContent=(movie.year||"Year unknown")+" • "+(movie.creator||"");
 
-  const tag=document.createElement("div");
-  tag.className="tag";
-  tag.textContent="MOVIE";
+  const btn=document.createElement("button");
+  btn.className="smallbtn";
+  btn.textContent="DETAILS";
+  btn.onclick=()=>openDetail(movie);
 
-  info.append(name,meta,tag);
-  card.append(poster,info);
+  info.appendChild(title);
+  info.appendChild(meta);
+  info.appendChild(btn);
 
-  card.onclick=()=>openMovie(index);
-  card.onkeydown=e=>{
-   if(e.key==="Enter")openMovie(index);
-  };
-
-  grid.appendChild(card);
-
-  const img=new Image();
-  img.loading="lazy";
-  img.src=API+"/services/img/"+encodeURIComponent(m.identifier);
-
-  img.onload=()=>{
-   poster.textContent="";
-   poster.appendChild(img);
-  };
+  row.appendChild(poster);
+  row.appendChild(info);
+  box.appendChild(row);
  });
-
- document.getElementById("pageInfo").textContent=
-  "PAGE "+(currentPage+1)+" • "+results.length+" MOVIES";
 }
 
-function changePage(direction){
- currentPage=Math.max(0,currentPage+direction);
- loadMovies(lastQuery||makeQuery());
+function changePage(n){
+ const next=currentPage+n;
+ if(next<1)return;
+ currentPage=next;
+ loadMovies();
 }
 
-async function openMovie(index){
- current=results[index];
- if(!current)return;
-
- stopVideo();
- currentFile=null;
-
- grid.style.display="none";
- document.getElementById("pagination").style.display="none";
- document.getElementById("search").style.display="none";
- detail.style.display="block";
-
- document.getElementById("dtitle").textContent=current.title||current.identifier;
- document.getElementById("dmeta").textContent=
-  (current.year||"Year unknown")+" • "+(current.language||"Language not specified");
-
- document.getElementById("desc").textContent=
-  current.description||"No description available.";
-
- document.getElementById("rights").textContent=
-  "License information: "+(current.licenseurl||"Not specified. Please check the item's rights page.");
-
- document.getElementById("fileInfo").textContent="";
- document.getElementById("playerBox").style.display="none";
-
- status("Checking video files...");
+async function openDetail(movie){
+ selectedMovie=movie;
+ document.getElementById("movieList").style.display="none";
+ document.getElementById("pages").style.display="none";
+ document.getElementById("detail").style.display="block";
+ document.getElementById("detailTitle").textContent=movie.title||"Movie";
+ document.getElementById("detailPoster").src=IMG+encodeURIComponent(movie.identifier);
+ document.getElementById("detailText").textContent="Loading details...";
 
  try{
-  const key="rc2_meta_"+current.identifier;
-  let metadata=cacheGet(key);
+  const r=await fetch(META+encodeURIComponent(movie.identifier));
+  const data=await r.json();
+  const m=data.metadata||{};
+  const description=Array.isArray(m.description)?m.description.join(" "):(m.description||movie.description||"Description unavailable.");
+  const license=m.licenseurl||"Not specified in metadata";
+  document.getElementById("detailText").textContent=
+   "Year: "+(m.year||movie.year||"Unknown")+
+   "\nCreator: "+(m.creator||movie.creator||"Unknown")+
+   "\nLanguage: "+(m.language||"Unknown")+
+   "\nLicense: "+license+
+   "\n\n"+description.substring(0,900);
+ }catch(e){
+  document.getElementById("detailText").textContent=movie.description||"Details unavailable.";
+ }
+}
 
-  if(!metadata){
-   const response=await fetch(API+"/metadata/"+encodeURIComponent(current.identifier));
-   if(!response.ok)throw Error("Metadata error");
-   metadata=await response.json();
-   cacheSet(key,metadata);
-  }
+function closeDetail(){
+ document.getElementById("detail").style.display="none";
+ document.getElementById("movieList").style.display="block";
+ document.getElementById("pages").style.display="block";
+}
 
-  const files=metadata.files||[];
+async function playSelected(){
+ if(!selectedMovie)return;
+
+ const accepted=confirm(
+ "Play this file only if you have the right to access and watch it. Internet Archive metadata does not guarantee that a title is legally distributable."
+ );
+ if(!accepted)return;
+
+ setStatus("Checking available files...");
+
+ try{
+  const r=await fetch(META+encodeURIComponent(selectedMovie.identifier));
+  const data=await r.json();
+  const files=data.files||[];
 
   const candidates=files.filter(f=>{
-   if(!f.name)return false;
-   const n=f.name.toLowerCase();
-   return (n.endsWith(".mp4")||n.endsWith(".m3u8")) &&
-    Number(f.size||0)>500000;
-  });
-
-  candidates.sort((a,b)=>{
-   const aa=a.name.toLowerCase().endsWith(".mp4")?0:1;
-   const bb=b.name.toLowerCase().endsWith(".mp4")?0:1;
-   if(aa!==bb)return aa-bb;
-   return Number(a.size||0)-Number(b.size||0);
+   const name=(f.name||"").toLowerCase();
+   return (name.endsWith(".mp4")||name.endsWith(".m3u8")) &&
+          !name.includes("sample") &&
+          !name.includes("trailer");
   });
 
   if(!candidates.length){
-   status("No suitable MP4 or HLS file found.");
+   alert("No compatible MP4 or M3U8 file found.");
    return;
   }
 
+  candidates.sort((a,b)=>{
+   const am=a.name.toLowerCase().endsWith(".mp4")?0:1;
+   const bm=b.name.toLowerCase().endsWith(".mp4")?0:1;
+   if(am!==bm)return am-bm;
+   return (Number(b.size)||0)-(Number(a.size)||0);
+  });
+
   currentFile=candidates[0];
+  const parts=currentFile.name.split("/").map(encodeURIComponent).join("/");
+  const src="https://archive.org/download/"+
+   encodeURIComponent(selectedMovie.identifier)+"/"+parts;
 
-  document.getElementById("fileInfo").textContent=
-   "File: "+currentFile.name+" • "+formatSize(currentFile.size);
-
-  status("Video file found. Press PLAY.");
+  startPlayer(src,selectedMovie.title||"Movie");
 
  }catch(e){
-  status("Could not load video information. Try again.");
+  alert("Unable to load video information. Check internet.");
  }
 }
 
-function formatSize(size){
- size=Number(size||0);
- if(size>1073741824)return (size/1073741824).toFixed(2)+" GB";
- return (size/1048576).toFixed(1)+" MB";
-}
-
-function playMovie(){
- if(!current||!currentFile){
-  status("No playable video file found.");
-  return;
- }
-
- const confirmRights=confirm(
-  "RIGHTS NOTICE\n\n"+
-  "Please check the video's rights and confirm you are permitted to watch it.\n\n"+
-  "Continue to player?"
- );
-
- if(!confirmRights)return;
-
- const url=API+"/download/"+
-  encodeURIComponent(current.identifier)+"/"+
-  currentFile.name.split("/").map(encodeURIComponent).join("/");
-
+function startPlayer(src,title){
+ document.getElementById("detail").style.display="none";
+ document.getElementById("player").style.display="block";
+ document.getElementById("playingTitle").textContent=title;
+ document.getElementById("playerStatus").textContent="Loading video...";
  video.pause();
  video.removeAttribute("src");
  video.load();
-
- video.src=url;
+ video.src=src;
  video.load();
 
- document.getElementById("playerBox").style.display="block";
- status("Loading video...");
-
  video.play().then(()=>{
-  status("Playing movie.");
-  saveRecent(current);
+  document.getElementById("playerStatus").textContent="Playing";
  }).catch(()=>{
-  status("Playback failed. The file may be unsupported or unavailable.");
+  document.getElementById("playerStatus").textContent="Press Play to start. Seeking depends on stream support.";
  });
+}
 
- video.onerror=()=>{
-  status("Video error. Try another file or movie.");
- };
+function seekVideo(seconds){
+ try{
+  if(!isFinite(video.duration)||video.duration<=0){
+   document.getElementById("playerStatus").textContent="Seeking unavailable for this stream.";
+   return;
+  }
+  let target=video.currentTime+seconds;
+  target=Math.max(0,Math.min(target,video.duration));
+
+  if(video.seekable.length){
+   let found=false;
+   for(let i=0;i<video.seekable.length;i++){
+    const start=video.seekable.start(i);
+    const end=video.seekable.end(i);
+    if(target>=start&&target<=end){found=true;break;}
+   }
+   if(!found){
+    document.getElementById("playerStatus").textContent="This video does not support seeking at that position.";
+    return;
+   }
+  }
+  video.currentTime=target;
+ }catch(e){
+  document.getElementById("playerStatus").textContent="Seeking not supported by this stream.";
+ }
 }
 
 function togglePlay(){
@@ -445,95 +472,155 @@ function togglePlay(){
  else video.pause();
 }
 
+function restartVideo(){
+ try{
+  video.currentTime=0;
+  video.play().catch(()=>{});
+ }catch(e){}
+}
+
 function stopVideo(){
+ video.pause();
+ try{video.currentTime=0}catch(e){}
+}
+
+function closePlayer(){
  video.pause();
  video.removeAttribute("src");
  video.load();
- document.getElementById("playerBox").style.display="none";
+ document.getElementById("player").style.display="none";
+ document.getElementById("detail").style.display="block";
 }
 
-function goBack(){
- stopVideo();
- detail.style.display="none";
- grid.style.display="block";
- document.getElementById("pagination").style.display="flex";
- document.getElementById("search").style.display="block";
+function formatTime(s){
+ if(!isFinite(s))return "00:00";
+ const m=Math.floor(s/60);
+ const sec=Math.floor(s%60);
+ return String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0");
 }
 
-function getList(key){
- try{return JSON.parse(localStorage.getItem(key)||"[]")}
- catch(e){return []}
-}
+video.addEventListener("timeupdate",()=>{
+ const current=video.currentTime||0;
+ const total=video.duration;
+ document.getElementById("timeInfo").textContent=
+  formatTime(current)+" / "+formatTime(total);
 
-function toggleWatchlist(){
- if(!current)return;
-
- let list=getList("rc2_watch");
- const i=list.findIndex(x=>x.identifier===current.identifier);
-
- if(i>=0)list.splice(i,1);
- else list.push(current);
-
- localStorage.setItem("rc2_watch",JSON.stringify(list));
- alert(i>=0?"Removed from My List":"Added to My List");
-}
-
-function saveRecent(movie){
- let list=getList("rc2_recent");
- list=list.filter(x=>x.identifier!==movie.identifier);
- list.unshift(movie);
- localStorage.setItem("rc2_recent",JSON.stringify(list.slice(0,20)));
-}
-
-function showWatchlist(btn){
- stopVideo();
-
- document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
- if(btn)btn.classList.add("active");
-
- detail.style.display="none";
- document.getElementById("search").style.display="none";
- document.getElementById("pagination").style.display="none";
-
- results=getList("rc2_watch");
- hideLoading();
- grid.style.display="block";
-
- if(!results.length){
-  grid.innerHTML="";
-  showLoading("Your list is empty.");
-  return;
- }
-
- renderMovies();
-}
-
-function showRecent(){
- stopVideo();
-
- detail.style.display="none";
- document.getElementById("search").style.display="none";
- document.getElementById("pagination").style.display="none";
-
- results=getList("rc2_recent");
- hideLoading();
- grid.style.display="block";
-
- if(!results.length){
-  grid.innerHTML="";
-  showLoading("No recently watched movies.");
-  return;
- }
-
- renderMovies();
-}
-
-document.addEventListener("keydown",e=>{
- if(e.key==="Escape"||e.key==="Backspace"){
-  if(detail.style.display==="block")goBack();
+ if(isFinite(total)&&total>0){
+  document.getElementById("seekbar").value=(current/total)*1000;
  }
 });
 
+video.addEventListener("waiting",()=>{
+ document.getElementById("playerStatus").textContent="Buffering...";
+});
+video.addEventListener("playing",()=>{
+ document.getElementById("playerStatus").textContent="Playing";
+});
+video.addEventListener("error",()=>{
+ document.getElementById("playerStatus").textContent="Video could not be played. Try another file.";
+});
+
+document.getElementById("seekbar").addEventListener("change",function(){
+ if(isFinite(video.duration)&&video.duration>0){
+  video.currentTime=(Number(this.value)/1000)*video.duration;
+ }
+});
+
+document.addEventListener("keydown",function(e){
+ if(document.getElementById("player").style.display!=="block")return;
+
+ if(e.key==="ArrowRight"){
+  e.preventDefault();
+  seekVideo(10);
+ }
+ else if(e.key==="ArrowLeft"){
+  e.preventDefault();
+  seekVideo(-10);
+ }
+ else if(e.key==="Enter"||e.key===" "){
+  e.preventDefault();
+  togglePlay();
+ }
+ else if(e.key==="0"){
+  e.preventDefault();
+  restartVideo();
+ }
+ else if(e.key==="Escape"||e.key==="Backspace"){
+  e.preventDefault();
+  closePlayer();
+ }
+});
+
+function getList(){
+ try{return JSON.parse(localStorage.getItem("rutik_list")||"[]")}
+ catch(e){return []}
+}
+
+function addWatchlist(){
+ if(!selectedMovie)return;
+ let list=getList();
+ if(!list.some(x=>x.identifier===selectedMovie.identifier)){
+  list.push({
+   identifier:selectedMovie.identifier,
+   title:selectedMovie.title,
+   year:selectedMovie.year
+  });
+  localStorage.setItem("rutik_list",JSON.stringify(list));
+ }
+ alert("Added to My List");
+}
+
+function showMyList(btn){
+ document.getElementById("movieList").style.display="none";
+ document.getElementById("pages").style.display="none";
+ document.getElementById("detail").style.display="none";
+ document.getElementById("watchlist").style.display="block";
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ if(btn)btn.classList.add("active");
+
+ const box=document.getElementById("myListItems");
+ box.innerHTML="";
+ const list=getList();
+
+ if(!list.length){
+  box.textContent="Your list is empty.";
+  return;
+ }
+
+ list.forEach(m=>{
+  const row=document.createElement("div");
+  row.className="movie";
+  const t=document.createElement("div");
+  t.className="info";
+  t.textContent=m.title||m.identifier;
+
+  const b=document.createElement("button");
+  b.className="smallbtn";
+  b.textContent="OPEN";
+  b.onclick=()=>openDetail(m);
+
+  const del=document.createElement("button");
+  del.className="smallbtn graybtn";
+  del.textContent="REMOVE";
+  del.onclick=()=>{
+   let updated=getList().filter(x=>x.identifier!==m.identifier);
+   localStorage.setItem("rutik_list",JSON.stringify(updated));
+   showMyList(document.querySelector("nav button:nth-child(4)"));
+  };
+
+  row.appendChild(t);
+  row.appendChild(b);
+  row.appendChild(del);
+  box.appendChild(row);
+ });
+}
+
+function closeMyList(){
+ document.getElementById("watchlist").style.display="none";
+ document.getElementById("movieList").style.display="block";
+ document.getElementById("pages").style.display="block";
+}
+
 loadMovies();
 </script></body>
-          </html>
+</html>
